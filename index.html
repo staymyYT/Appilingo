@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lingo – Sprachen lernen mit Appi</title>
+<style>
+:root{--bg:#0e1a15;--p:#162a21;--p2:#1e382c;--ln:#2b4a3a;--tx:#f3f7f1;--mu:#9db8a8;--gr:#58cc02;--bn:#ffd23f;--bl:#5cc8ff;--rd:#ff6b7a;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{background:radial-gradient(1200px 600px at 20% -10%,#1d3a2b,transparent),var(--bg);color:var(--tx);font:700 15px/1.4 "Trebuchet MS","Segoe UI",Verdana,sans-serif}
+button,input{font:inherit;color:inherit}button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--bl);outline-offset:2px}
+.app{display:grid;grid-template-columns:260px minmax(0,1fr) 340px;gap:28px;max-width:1320px;margin:0 auto;height:100vh;padding:0 24px}
+.side,.right{padding:24px 0;overflow-y:auto}
+.main{overflow-y:auto;padding:28px 8px 60px}
+.logo{display:flex;align-items:center;gap:10px;font-size:28px;font-weight:900;color:var(--bn);letter-spacing:-1px;margin-bottom:26px}
+.nav{display:grid;gap:6px}
+.nav button{display:flex;align-items:center;gap:14px;padding:13px 16px;border-radius:14px;border:2px solid transparent;color:var(--mu);font-size:15px;text-align:left;transition:background .15s}
+.nav button:hover{background:var(--p)}
+.nav button.on{background:#27481f;border-color:#4a8a2c;color:#c8ff9a}
+.nav .ic{font-size:22px;width:28px;text-align:center}
+.langbtn{margin-top:22px;width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:var(--p);border:2px solid var(--ln)}
+.badge{display:inline-grid;place-items:center;min-width:34px;height:24px;border-radius:7px;background:var(--bn);color:#3b2a00;font-size:12px;font-weight:900}
+h1{font-size:30px;margin:0 0 4px;letter-spacing:-.5px}h2{font-size:20px;margin:28px 0 12px}
+.mu{color:var(--mu)}.sm{font-size:13px}
+.card{background:var(--p);border:2px solid var(--ln);border-radius:20px;padding:18px}
+.btn{background:var(--gr);color:#0d2d00;border-radius:14px;padding:13px 22px;font-weight:900;box-shadow:0 4px 0 #2e8000;transition:transform .1s}
+.btn:active{transform:translateY(3px);box-shadow:none}.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.alt{background:var(--p2);color:var(--tx);box-shadow:0 4px 0 #0b1511;border:2px solid var(--ln)}
+.btn.red{background:var(--rd);color:#40101a;box-shadow:0 4px 0 #a03a49}
+.hero{display:flex;align-items:center;gap:24px;padding:24px 28px;border-radius:24px;background:linear-gradient(120deg,#2a5a2a,#1f4a3a 60%,#2b3b5e);border:2px solid #3f7a45;margin:18px 0 6px}
+.hero h2{margin:0 0 6px;font-size:26px}.hero p{margin:0 0 14px;color:#cfe8d2}
+.bar{height:12px;background:#0a120e;border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gr),#b4f060);border-radius:9px;transition:width .4s}
+.path{display:flex;flex-direction:column;align-items:center;gap:22px;padding:24px 0}
+.node{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;font-size:32px;background:var(--gr);border:5px solid #9bea5c;box-shadow:0 6px 0 #2e8000;transition:transform .15s}
+.node:hover{transform:scale(1.07)}
+.node.done{background:#2e8d1a;border-color:#6fd04a;box-shadow:0 6px 0 #1b5a0e}
+.node.lock{background:#22362d;border-color:#33503f;box-shadow:0 6px 0 #0b1511;filter:grayscale(.7);cursor:not-allowed}
+.node.cur{animation:pulse 1.8s infinite}
+@keyframes pulse{50%{box-shadow:0 6px 0 #2e8000,0 0 0 12px #58cc0233}}
+.nl{text-align:center;font-size:12px;color:var(--mu);margin-top:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pc{text-align:left;padding:18px;border-radius:18px;background:var(--p);border:2px solid var(--ln);transition:transform .15s,border-color .15s}
+.pc:hover{transform:translateY(-3px);border-color:var(--gr)}.pc b{display:block;font-size:17px;margin:8px 0 4px}.pc .e{font-size:30px}
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--ln)}.row:last-child{border:0}.row>div{flex:1}
+.stat{display:flex;gap:10px;margin-bottom:16px}.stat div{flex:1;background:var(--p);border:2px solid var(--ln);border-radius:14px;padding:10px;text-align:center;font-size:18px;font-weight:900}
+.stat small{display:block;font-size:11px;color:var(--mu);font-weight:700}
+.toggle{width:48px;height:28px;border-radius:99px;background:#3a5547;padding:3px}.toggle span{display:block;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .15s}.toggle.on{background:var(--gr)}.toggle.on span{transform:translateX(20px)}
+.ov{position:fixed;inset:0;background:#07100ccc;backdrop-filter:blur(6px);display:grid;place-items:center;z-index:50;padding:20px}
+.modal{width:min(560px,100%);max-height:88vh;overflow:auto;background:var(--bg);border:2px solid var(--ln);border-radius:24px;padding:24px}
+.modal h3{margin:0 0 12px;font-size:22px}
+.les{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;flex-direction:column}
+.les-in{width:min(760px,100%);margin:0 auto;flex:1;display:flex;flex-direction:column;padding:26px 24px 0}
+.les-top{display:flex;align-items:center;gap:16px}.les-top .bar{flex:1;height:16px}
+.x{font-size:26px;color:var(--mu);padding:4px 10px;border-radius:10px}.x:hover{background:var(--p)}
+.q{display:flex;align-items:center;gap:20px;margin:32px 0}
+.say{background:var(--p);border:2px solid var(--ln);border-radius:18px;padding:16px 22px;font-size:26px;font-weight:900;flex:1;position:relative}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;padding:16px;border:2px solid var(--ln);border-radius:16px;background:var(--p);font-size:17px;min-height:64px;transition:border-color .1s}
+.opt:hover:not(:disabled){border-color:var(--bl)}.opt kbd{border:2px solid var(--ln);border-radius:8px;padding:1px 8px;color:var(--mu);font-size:12px}
+.opt.sel{border-color:var(--bl);background:#173a4a}.opt.ok{border-color:var(--gr);background:#1c4a24}.opt.no{border-color:var(--rd);background:#4a2530}
+.ti{width:100%;padding:16px;border-radius:16px;border:2px solid var(--ln);background:var(--p);font-size:20px}
+.foot{border-top:2px solid var(--ln);margin-top:auto}
+.foot.good{background:#173d1f}.foot.bad{background:#3d1d26}
+.foot-in{width:min(760px,100%);margin:0 auto;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:100px}
+.foot h3{margin:0;font-size:22px}
+.done{text-align:center;margin:auto}.done h1{font-size:36px}
+.res{display:flex;gap:14px;justify-content:center;margin:24px 0}.res div{background:var(--p);border:2px solid var(--ln);border-radius:16px;padding:14px 26px;font-size:26px;font-weight:900}.res small{display:block;font-size:12px;color:var(--mu)}
+.toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,20px);opacity:0;background:#eaf8e6;color:#10301a;padding:12px 20px;border-radius:14px;z-index:99;transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
+.i{width:1.15em;height:1.15em;display:inline-block;vertical-align:-.22em;flex:0 0 auto}.eye{transform-box:fill-box;transform-origin:center;animation:blink 4.5s infinite}@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.08)}}.monkey{animation:bob 2.4s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-6px)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(max-width:1100px){.app{grid-template-columns:200px 1fr}.right{display:none}}
+
+.app,.main{position:relative}.app{z-index:1}
+.bgd{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.bl1,.bl2{position:absolute}.bl1{left:-60px;bottom:-70px;width:320px;height:320px;opacity:.2;animation:sway 7s ease-in-out infinite alternate}
+.bl2{right:-70px;top:-60px;width:270px;height:270px;opacity:.15;animation:sway2 9s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(14deg)}to{transform:rotate(26deg)}}@keyframes sway2{from{transform:rotate(194deg)}to{transform:rotate(208deg)}}
+.hero{position:relative;overflow:hidden}.hero>:not(.hl){position:relative;z-index:1}
+.hl{position:absolute;right:-24px;top:-34px;width:220px;height:220px;opacity:.28;animation:sway 6s ease-in-out infinite alternate}
+.appi{overflow:visible;cursor:pointer;display:block;flex:0 0 auto;user-select:none;transform-origin:50% 90%}
+.appi .ab{transform-origin:60px 112px;animation:breathe 3.2s ease-in-out infinite}@keyframes breathe{50%{transform:scale(1.02,.98)}}
+.appi .head{transform-origin:60px 96px;transform:rotate(var(--rot,0deg));transition:transform .18s}
+.appi .pup{transform:translate(var(--px,0px),var(--py,0px));transition:transform .09s}
+.appi .arm{transform-origin:30px 96px;transition:transform .3s}.appi .arm2{transform-origin:88px 94px}
+.appi .v{opacity:0;transition:opacity .15s}.appi .m1,.appi .eye{transition:opacity .12s}
+.appi.happy .m1,.appi.sad .m1,.appi.wow .m1{opacity:0}
+.appi.happy .mh,.appi.sad .ms,.appi.wow .mw,.appi.happy .eh,.appi.happy .spk,.appi.sad .tear{opacity:1}
+.appi.happy .eye{opacity:0}.appi.sad .head{transform:translateY(4px) rotate(var(--rot,0deg))}
+.appi .bl,.appi .br{transform-box:fill-box;transform-origin:center;transition:transform .2s}
+.appi.sad .bl{transform:rotate(-16deg) translateY(1px)}.appi.sad .br{transform:rotate(16deg) translateY(1px)}
+.appi.happy .bl,.appi.happy .br,.appi.wow .bl,.appi.wow .br{transform:translateY(-3px)}
+.appi.happy .spk path{transform-box:fill-box;transform-origin:center;animation:tw .45s ease-in-out infinite alternate}
+@keyframes tw{from{transform:scale(.4) rotate(0)}to{transform:scale(1.2) rotate(40deg)}}
+.appi.sad .tear{animation:tear 1.1s ease-in infinite}@keyframes tear{0%{transform:translateY(0);opacity:1}100%{transform:translateY(14px);opacity:0}}
+.appi.jump{animation:jump .8s ease-out}.appi.spin{animation:spin .9s cubic-bezier(.3,1.4,.5,1)}.appi.shake{animation:shake .6s}.appi.dance{animation:dance .5s ease-in-out 5 alternate}
+@keyframes jump{0%{transform:scale(1.1,.85)}30%{transform:translateY(-28px) scale(.95,1.08)}55%{transform:scale(1.1,.9)}75%{transform:translateY(-9px)}100%{transform:none}}
+@keyframes spin{from{transform:rotate(0) scale(1.1)}to{transform:rotate(360deg) scale(1)}}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-9px) rotate(-6deg)}40%{transform:translateX(9px) rotate(6deg)}60%{transform:translateX(-6px) rotate(-3deg)}80%{transform:translateX(6px)}}
+@keyframes dance{from{transform:rotate(-7deg) translateY(0)}to{transform:rotate(7deg) translateY(-9px)}}
+.appi.wave .arm{transform:rotate(100deg);animation:wave .45s ease-in-out 4 alternate .1s}.appi.dance .arm{transform:rotate(130deg)}
+@keyframes wave{from{transform:rotate(100deg)}to{transform:rotate(140deg)}}
+.appi.happy .arm2,.appi.dance .arm2{animation:cheer .4s ease-in-out infinite alternate}@keyframes cheer{from{transform:rotate(-15deg)}to{transform:rotate(-55deg)}}
+.bub{position:fixed;transform:translate(-50%,-100%);background:#fff;color:#16301f;padding:8px 14px;border-radius:14px;font-weight:900;z-index:300;pointer-events:none;animation:pop .25s;white-space:nowrap;box-shadow:0 6px 18px #0006}
+.bub:after{content:"";position:absolute;left:50%;bottom:-6px;width:12px;height:12px;background:#fff;transform:translateX(-50%) rotate(45deg)}
+@keyframes pop{from{transform:translate(-50%,-90%) scale(.6);opacity:0}}
+.fx{position:fixed;color:var(--bn);font-weight:900;font-size:24px;animation:fxr 1s forwards;pointer-events:none;z-index:300;text-shadow:0 2px 0 #0008}@keyframes fxr{to{transform:translateY(-60px);opacity:0}}
+.cf{position:fixed;top:-20px;z-index:400;border-radius:2px;animation:cfall linear forwards;pointer-events:none}@keyframes cfall{to{transform:translateY(110vh) rotate(720deg)}}
+.up{display:inline-block;margin-top:14px;padding:8px 18px;border-radius:99px;background:linear-gradient(90deg,#ffd23f,#ffb100);color:#3b2a00;animation:upp .5s}@keyframes upp{from{transform:scale(.6);opacity:0}}
+.lvl{display:flex;gap:16px;align-items:center;margin-top:14px}.lv{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:26px;font-weight:900;background:linear-gradient(140deg,#ffd23f,#ff9f42);color:#3b2a00;box-shadow:0 4px 0 #a86a00}
+.hrt.lost{animation:shake .5s;color:var(--rd)}.corner{position:absolute;top:14px;right:18px;z-index:2}
+.main.anim>*{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}.main.anim>:nth-child(2){animation-delay:.04s}.main.anim>:nth-child(3){animation-delay:.08s}.main.anim>:nth-child(n+4){animation-delay:.12s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+.nav button:hover .i{animation:wig .5s}@keyframes wig{25%{transform:rotate(-14deg) scale(1.15)}75%{transform:rotate(14deg) scale(1.15)}}
+.stat div:first-child .i{animation:flick 1.3s ease-in-out infinite alternate}@keyframes flick{from{transform:scale(1) rotate(-3deg)}to{transform:scale(1.12) rotate(3deg)}}
+.stat div:nth-child(2) .i{animation:gl 2.2s ease-in-out infinite}@keyframes gl{50%{filter:brightness(1.4) drop-shadow(0 0 4px #5cc8ff)}}
+.tut{width:min(720px,100%)}.tgrid{display:grid;grid-template-columns:190px 1fr;gap:20px;align-items:center;margin:14px 0 18px}
+.tdots{display:flex;align-items:center;gap:8px}.tdots i{width:34px;height:8px;border-radius:9px;background:var(--ln)}.tdots i.on{background:var(--gr)}.tdots .x{margin-left:auto}
+.tfoot{display:flex;justify-content:space-between;align-items:center}.big{font-size:26px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<radialGradient id="gFur" cx=".45" cy=".3" r=".8"><stop offset="0" stop-color="#bf8444"/><stop offset="1" stop-color="#8a5524"/></radialGradient>
+<linearGradient id="gBan" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe56b"/><stop offset="1" stop-color="#f2b705"/></linearGradient></defs>
+<symbol id="kiko" viewBox="0 0 120 120">
+<ellipse cx="60" cy="112" rx="28" ry="6" fill="#000" opacity=".25"/>
+<path d="M30 112c-2-22 10-34 30-34s32 12 30 34z" fill="url(#gFur)"/><ellipse cx="60" cy="104" rx="16" ry="14" fill="#f3d3ac"/>
+<circle cx="19" cy="56" r="14" fill="#8a5524"/><circle cx="19" cy="56" r="8" fill="#f0c597"/>
+<circle cx="101" cy="56" r="14" fill="#8a5524"/><circle cx="101" cy="56" r="8" fill="#f0c597"/>
+<ellipse cx="60" cy="52" rx="39" ry="38" fill="url(#gFur)"/>
+<path d="M50 17q10-9 20 0q-10-3-20 0z" fill="#7a4a20"/>
+<path d="M60 45C53 31 27 35 28 55C29 69 43 77 52 74C56 73 64 73 68 74C77 77 91 69 92 55C93 35 67 31 60 45Z" fill="#f6dbb8"/>
+<ellipse cx="60" cy="72" rx="20" ry="15" fill="#e6bd8f"/>
+<g class="eye"><ellipse cx="45" cy="54" rx="8" ry="9.5" fill="#fff"/><circle cx="46.5" cy="55" r="5" fill="#2a1608"/><circle cx="48.2" cy="52.6" r="1.8" fill="#fff"/></g>
+<g class="eye"><ellipse cx="75" cy="54" rx="8" ry="9.5" fill="#fff"/><circle cx="73.5" cy="55" r="5" fill="#2a1608"/><circle cx="75.2" cy="52.6" r="1.8" fill="#fff"/></g>
+<path d="M36 41q8-6 16-1M84 41q-8-6-16-1" fill="none" stroke="#6b4020" stroke-width="2.6" stroke-linecap="round"/>
+<ellipse cx="55" cy="66" rx="2.3" ry="1.8" fill="#6b4020"/><ellipse cx="65" cy="66" rx="2.3" ry="1.8" fill="#6b4020"/>
+<path d="M48 75q12 11 24 0" fill="#7a2f2f" stroke="#5a3517" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M54 79q6 4 12 0q-6-2-12 0z" fill="#ff8a8a"/>
+<circle cx="36" cy="68" r="5" fill="#ff8f8f" opacity=".35"/><circle cx="84" cy="68" r="5" fill="#ff8f8f" opacity=".35"/>
+<path d="M78 100c10-10 24-6 28 8-12 0-22-2-28-8z" fill="url(#gBan)" stroke="#b8860b" stroke-width="2" stroke-linejoin="round"/><path d="M104 104l5-4" stroke="#6b4020" stroke-width="3" stroke-linecap="round"/>
+<circle cx="80" cy="102" r="7" fill="#8a5524"/></symbol>
+<symbol id="leaf" viewBox="0 0 100 100"><path d="M8 96C4 50 30 10 92 4C96 60 60 94 8 96Z" fill="#2f6b3a"/><path d="M8 96C30 60 55 35 92 4M30 72l16 2M40 56l17 4M54 42l16 2M24 82l-4-14" fill="none" stroke="#4f9a55" stroke-width="3" stroke-linecap="round"/></symbol>
+<symbol id="i-kikoface" viewBox="14 6 92 84"><use href="#kiko"/></symbol>
+<symbol id="i-banana" viewBox="0 0 24 24"><path d="M4 16c5 5 14 2 17-9l-3-1c-1 6-5 9-11 7z" fill="#ffd23f" stroke="#b8860b" stroke-width="1.5" stroke-linejoin="round"/><path d="M18 6l1.5-3" stroke="#6b4020" stroke-width="2.2" stroke-linecap="round"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="#9db8a8" stroke-width="2.2"/><rect x="5" y="11" width="14" height="10" rx="2.5" fill="#6f8a7b"/><circle cx="12" cy="16" r="1.8" fill="#22362d"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#58cc02"/><path d="M7 12.5l3.5 3.5L17 8.5" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-no" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ff6b7a"/><path d="M8 8l8 8M16 8l-8 8" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M2 5c4-2 7-1.5 10 1v14c-3-2.5-6-3-10-1z" fill="#3fa9e0"/><path d="M22 5c-4-2-7-1.5-10 1v14c3-2.5 6-3 10-1z" fill="#8fdcff"/></symbol>
+<symbol id="i-headphones" viewBox="0 0 24 24"><path d="M4 16v-4a8 8 0 0 1 16 0v4" fill="none" stroke="#b58cff" stroke-width="2.4"/><rect x="2.5" y="13" width="5" height="8" rx="2" fill="#8a5cf0"/><rect x="16.5" y="13" width="5" height="8" rx="2" fill="#8a5cf0"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .9-5.2 4.8 1.4 7L12 17.7 5.8 21.2l1.4-7L2 9.4l7-.9z" fill="#ffd23f" stroke="#c99a00" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-8l-5 4v-4H5a2 2 0 0 1-2-2z" fill="#5cc8ff"/><circle cx="8" cy="10" r="1.5" fill="#fff"/><circle cx="12" cy="10" r="1.5" fill="#fff"/><circle cx="16" cy="10" r="1.5" fill="#fff"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" rx="2" fill="#ff6b7a"/><rect x="2" y="6" width="20" height="5" rx="1.5" fill="#ff8f9a"/><rect x="10.5" y="6" width="3" height="15" fill="#ffd23f"/><path d="M12 6c-4-5-8 0-4 0M12 6c4-5 8 0 4 0" fill="none" stroke="#ffd23f" stroke-width="2"/></symbol>
+<symbol id="i-repeat" viewBox="0 0 24 24"><path d="M4 11V9a3 3 0 0 1 3-3h11M20 13v2a3 3 0 0 1-3 3H6" fill="none" stroke="#5cc8ff" stroke-width="2.6" stroke-linecap="round"/><path d="M15 2l4 4-4 4M9 14l-4 4 4 4" fill="none" stroke="#5cc8ff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 3h10v6a5 5 0 0 1-10 0z" fill="#ffd23f"/><path d="M7 5H3v2a4 4 0 0 0 4 4M17 5h4v2a4 4 0 0 1-4 4" fill="none" stroke="#e0a800" stroke-width="2"/><rect x="11" y="14" width="2" height="4" fill="#e0a800"/><rect x="7" y="18" width="10" height="3" rx="1" fill="#c99a00"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" fill="#9bea5c"/><path d="M2 11.5L12 3l10 8.5" fill="none" stroke="#58cc02" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="i-dumbbell" viewBox="0 0 24 24"><rect x="2" y="8" width="4" height="8" rx="1.5" fill="#ff9f42"/><rect x="18" y="8" width="4" height="8" rx="1.5" fill="#ff9f42"/><rect x="5" y="5" width="3.5" height="14" rx="1.5" fill="#ffb86b"/><rect x="15.5" y="5" width="3.5" height="14" rx="1.5" fill="#ffb86b"/><rect x="8" y="10.8" width="8" height="2.4" fill="#c9d6cf"/></symbol>
+<symbol id="i-medal" viewBox="0 0 24 24"><path d="M7 2h4l2 7H9zM17 2h-4l-2 7h4z" fill="#5cc8ff"/><circle cx="12" cy="15" r="6.5" fill="#ffd23f" stroke="#c99a00" stroke-width="1.6"/><path d="M12 11.5l1.2 2.4 2.6.3-1.9 1.8.5 2.6-2.4-1.3-2.4 1.3.5-2.6-1.9-1.8 2.6-.3z" fill="#c99a00"/></symbol>
+<symbol id="i-gem" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 13L2 9z" fill="#5cc8ff"/><path d="M2 9h20M6 3l3 6 3 13 3-13 3-6M9 9h6" fill="none" stroke="#d8f4ff" stroke-width="1.1" stroke-linejoin="round"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ff6b7a"/><circle cx="12" cy="12" r="7" fill="#fff"/><circle cx="12" cy="12" r="4.5" fill="#ff6b7a"/><circle cx="12" cy="12" r="1.8" fill="#fff"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13.5 2L4.5 14h6l-1.5 8 10-13h-6.5z" fill="#ffd23f" stroke="#e0a800" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+<symbol id="i-speaker" viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9z" fill="#5cc8ff"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11" fill="none" stroke="#8fdcff" stroke-width="2.2" stroke-linecap="round"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21l-8.2-8.3A5.3 5.3 0 0 1 11.3 5.3l.7.7.7-.7a5.3 5.3 0 0 1 7.5 7.4z" fill="#ff5c70"/><path d="M7 8.5a2.5 2.5 0 0 1 2.4-1" fill="none" stroke="#ffb3bd" stroke-width="1.6" stroke-linecap="round"/></symbol>
+<symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-4 2-7 2 1 3 2 3 4 2-2 2-5 1-9z" fill="#ff8a2a"/><path d="M12 13c1 2 3 3 3 5a3 3 0 0 1-6 0c0-2 2-3 3-5z" fill="#ffd23f"/></symbol>
+<symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7" stroke="#bfeaff" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="12" r="2.4" fill="#5cc8ff"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#9db8a8" stroke-width="3" stroke-linecap="round"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="#9db8a8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="i-face" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4f8f6a"/><circle cx="8.5" cy="10" r="1.5" fill="#10301a"/><circle cx="15.5" cy="10" r="1.5" fill="#10301a"/><path d="M7.5 14.5q4.5 4 9 0" fill="none" stroke="#10301a" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+<div class="bgd" aria-hidden="true"><svg class="bl1" viewBox="0 0 100 100"><use href="#leaf"/></svg><svg class="bl2" viewBox="0 0 100 100"><use href="#leaf"/></svg></div><div id="root"></div><div class="toast" id="toast" role="status"></div>
+<script>
+(()=>{'use strict';
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* Appi, der Affe */
+const APPI=`<g class="ab"><ellipse cx="60" cy="114" rx="26" ry="5" fill="#000" opacity=".25"/>
+<g class="arm"><path d="M30 96Q22 102 20 114" fill="none" stroke="#8a5524" stroke-width="11" stroke-linecap="round"/><circle cx="20" cy="114" r="7" fill="#7a4a20"/></g>
+<path d="M30 114c-2-22 10-34 30-34s32 12 30 34z" fill="url(#gFur)"/><ellipse cx="60" cy="104" rx="16" ry="14" fill="#f3d3ac"/>
+<g class="arm2"><path d="M88 94Q100 98 98 108" fill="none" stroke="#8a5524" stroke-width="11" stroke-linecap="round"/><path d="M92 106c8-14 22-10 26 6-12 3-21 1-26-6z" fill="url(#gBan)" stroke="#b8860b" stroke-width="2" stroke-linejoin="round"/><path d="M115 106l4-5" stroke="#6b4020" stroke-width="3" stroke-linecap="round"/><circle cx="96" cy="110" r="7" fill="#7a4a20"/></g>
+<g class="head"><circle cx="19" cy="56" r="14" fill="#8a5524"/><circle cx="19" cy="56" r="8" fill="#f0c597"/><circle cx="101" cy="56" r="14" fill="#8a5524"/><circle cx="101" cy="56" r="8" fill="#f0c597"/>
+<ellipse cx="60" cy="52" rx="39" ry="38" fill="url(#gFur)"/><path d="M50 17q10-9 20 0q-10-3-20 0z" fill="#7a4a20"/>
+<path d="M60 45C53 31 27 35 28 55C29 69 43 77 52 74C56 73 64 73 68 74C77 77 91 69 92 55C93 35 67 31 60 45Z" fill="#f6dbb8"/><ellipse cx="60" cy="72" rx="20" ry="15" fill="#e6bd8f"/>
+<g class="eye"><ellipse cx="45" cy="54" rx="8" ry="9.5" fill="#fff"/><g class="pup"><circle cx="46.5" cy="55" r="5" fill="#2a1608"/><circle cx="48.2" cy="52.6" r="1.8" fill="#fff"/></g></g>
+<g class="eye"><ellipse cx="75" cy="54" rx="8" ry="9.5" fill="#fff"/><g class="pup"><circle cx="73.5" cy="55" r="5" fill="#2a1608"/><circle cx="75.2" cy="52.6" r="1.8" fill="#fff"/></g></g>
+<path class="eh v" d="M37 57q8-11 16 0M67 57q8-11 16 0" fill="none" stroke="#2a1608" stroke-width="3.4" stroke-linecap="round"/>
+<path class="bl" d="M36 41q8-6 16-1" fill="none" stroke="#6b4020" stroke-width="2.8" stroke-linecap="round"/><path class="br" d="M84 41q-8-6-16-1" fill="none" stroke="#6b4020" stroke-width="2.8" stroke-linecap="round"/>
+<ellipse cx="55" cy="66" rx="2.3" ry="1.8" fill="#6b4020"/><ellipse cx="65" cy="66" rx="2.3" ry="1.8" fill="#6b4020"/>
+<path class="m1" d="M48 75q12 11 24 0" fill="#7a2f2f" stroke="#5a3517" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path class="m1" d="M54 79q6 4 12 0q-6-2-12 0z" fill="#ff8a8a"/>
+<g class="v mh"><path d="M46 74q14 22 28 0z" fill="#7a2f2f" stroke="#5a3517" stroke-width="2.4" stroke-linejoin="round"/><path d="M52 83q8-7 16 0q-8 5-16 0z" fill="#ff8a8a"/></g>
+<path class="v ms" d="M50 83q10-10 20 0" fill="none" stroke="#5a3517" stroke-width="3" stroke-linecap="round"/><ellipse class="v mw" cx="60" cy="80" rx="5.5" ry="7" fill="#7a2f2f" stroke="#5a3517" stroke-width="2"/>
+<circle cx="36" cy="68" r="5" fill="#ff8f8f" opacity=".35"/><circle cx="84" cy="68" r="5" fill="#ff8f8f" opacity=".35"/>
+<path class="v tear" d="M33 64q-5 8 0 11q5-3 0-11z" fill="#6fd0ff"/>
+<g class="v spk" transform="translate(2 14)"><path d="M6 0l1.6 4.4L12 6l-4.4 1.6L6 12 4.4 7.6 0 6l4.4-1.6z" fill="#ffd23f"/></g><g class="v spk" transform="translate(104 8)"><path d="M6 0l1.6 4.4L12 6l-4.4 1.6L6 12 4.4 7.6 0 6l4.4-1.6z" fill="#ffd23f"/></g><g class="v spk" transform="translate(108 36)"><path d="M6 0l1.6 4.4L12 6l-4.4 1.6L6 12 4.4 7.6 0 6l4.4-1.6z" fill="#ffd23f"/></g></g></g>`;
+const monkey=(s=90,cls='')=>`<svg class="appi ${cls}" width="${s}" height="${s}" viewBox="0 0 120 120" role="img" aria-label="Appi der Affe">${APPI}</svg>`;
+const H=(a,...v)=>(Array.isArray(a)?a.reduce((r,s,i)=>r+s+(i<v.length?v[i]:''),''):a).replace(/@@(\w+)@@/g,(_,n)=>`<svg class="i" aria-hidden="true"><use href="#i-${n}"/></svg>`);
+/* Daten */
+const DE=['Hallo','Danke','Bitte','Guten Morgen','Wie geht es dir?','Ich heiße Alex.','Wo ist der Bahnhof?','Bis später!'];
+const C=[
+['en','Englisch','GB','Hello;Thank you;Please;Good morning;How are you?;My name is Alex.;Where is the station?;See you later!'],
+['es','Spanisch','ES','Hola;Gracias;Por favor;Buenos días;¿Cómo estás?;Me llamo Alex.;¿Dónde está la estación?;¡Hasta luego!'],
+['fr','Französisch','FR','Bonjour;Merci;S’il vous plaît;Bonne matinée;Comment ça va ?;Je m’appelle Alex.;Où est la gare ?;À plus tard !'],
+['it','Italienisch','IT','Ciao;Grazie;Per favore;Buongiorno;Come stai?;Mi chiamo Alex.;Dov’è la stazione?;A dopo!'],
+['nl','Niederländisch','NL','Hallo;Dank je;Alsjeblieft;Goedemorgen;Hoe gaat het?;Ik heet Alex.;Waar is het station?;Tot later!'],
+['tr','Türkisch','TR','Merhaba;Teşekkürler;Lütfen;Günaydın;Nasılsın?;Benim adım Alex.;İstasyon nerede?;Sonra görüşürüz!'],
+['ja','Japanisch','JP','こんにちは|konnichiwa;ありがとう|arigatō;お願いします|onegaishimasu;おはよう|ohayō;元気ですか？|genki desu ka;アレックスです。|Arekkusu desu;駅はどこですか？|eki wa doko desu ka;またね！|mata ne'],
+['ru','Russisch','RU','Привет|privet;Спасибо|spasibo;Пожалуйста|pozhalujsta;Доброе утро|dobroe utro;Как дела?|kak dela;Меня зовут Алекс.|menya zovut Aleks;Где вокзал?|gde vokzal;До встречи!|do vstrechi']
+].map(([id,name,code,p])=>({id,name,code,ph:p.split(';').map(x=>x.split('|'))}));
+const LANG={en:'en-GB',es:'es-ES',fr:'fr-FR',it:'it-IT',nl:'nl-NL',tr:'tr-TR',ja:'ja-JP',ru:'ru-RU'};
+const GOALS=[['easy','Entspannt','10 XP am Tag',10],['normal','Normal','30 XP am Tag',30],['serious','Ernsthaft','50 XP am Tag',50],['intense','Intensiv','80 XP am Tag',80]];
+const NODES=[['@@banana@@','Hallo!'],['@@book@@','Erste Wörter'],['@@headphones@@','Hörverständnis'],['@@star@@','Mini-Challenge'],['@@chat@@','Vorstellen'],['@@gift@@','Belohnung'],['@@repeat@@','Wiederholung'],['@@trophy@@','Abschlussprüfung']];
+const TABS=[['home','@@home@@','Lernpfad'],['practice','@@dumbbell@@','Üben'],['league','@@medal@@','Liga'],['shop','@@gem@@','Shop'],['profile','@@kikoface@@','Profil']];
+const DEF={course:'en',goal:'normal',tab:'home',xp:0,gems:100,hearts:5,heartT:0,streak:0,last:'',lessons:0,done:{},freeze:0,boost:false,day:'',dXp:0,dLes:0,dOk:0,claimed:[],sound:true,sfx:true,langs:{}};
+const KEY='lingo_kiko_v2';
+let S=load(),L=null,M=null,tt;
+function fresh(){return JSON.parse(JSON.stringify(DEF))}
+function load(){let s;try{s={...fresh(),...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{s=fresh()}s.langs=s.langs||{};if(Object.keys(s.done||{}).length&&!s.langs[s.course])s.langs[s.course]={done:s.done,xp:s.xp,lessons:s.lessons,intro:true};s.done={};return s}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch{}}
+const dstr=(d=new Date())=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const daysBetween=(a,b)=>Math.round((new Date(b+'T12:00')-new Date(a+'T12:00'))/864e5);
+const cur=()=>C.find(c=>c.id===S.course)||C[0];
+const P=()=>S.langs[S.course]||(S.langs[S.course]={done:{},xp:0,lessons:0,intro:false});
+const lvl=x=>1+Math.floor(x/100),NAMES=['Bananenkeim','Frischling','Entdecker','Plapperaffe','Sprachprofi','Meister','Legende'],lvName=l=>NAMES[Math.min(l-1,NAMES.length-1)];
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+let AC;function tone(f,d=.12,w=0,ty='sine',v=.07){if(!S.sfx)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain(),s=AC.currentTime+w;o.type=ty;o.frequency.value=f;g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(.0001,s+d);o.connect(g);g.connect(AC.destination);o.start(s);o.stop(s+d)}catch{}}
+const sfx={ok(){tone(660,.1);tone(880,.16,.09)},no(){tone(190,.28,0,'sawtooth',.045)},win(){[523,659,784,1047].forEach((f,i)=>tone(f,.22,i*.1))},pop(){tone(520,.08,0,'triangle');tone(780,.1,.05,'triangle')}};
+const MOODS=['happy','sad','wow','jump','spin','shake','wave','dance'];
+function appi(el,mood,act,ms=1200){if(!el)return;el.classList.remove(...MOODS);el.getBoundingClientRect();if(mood)el.classList.add(mood);if(act)el.classList.add(act);clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove(...MOODS),ms)}
+function bubble(el,txt,ms=1900){if(!el)return;$$('.bub').forEach(b=>b.remove());const r=el.getBoundingClientRect(),b=document.createElement('div');b.className='bub';b.textContent=txt;b.style.left=Math.max(80,Math.min(innerWidth-80,r.left+r.width/2))+'px';b.style.top=(r.top+6)+'px';document.body.appendChild(b);setTimeout(()=>b.remove(),ms)}
+function floatTxt(txt,x,y){const f=document.createElement('div');f.className='fx';f.textContent=txt;f.style.left=x+'px';f.style.top=y+'px';document.body.appendChild(f);setTimeout(()=>f.remove(),1000)}
+function confetti(){const c=['#ffd23f','#58cc02','#5cc8ff','#ff6b7a','#b58cff'];for(let i=0;i<70;i++){const e=document.createElement('i');e.className='cf';e.style.cssText=`left:${Math.random()*100}vw;background:${c[i%5]};animation-duration:${2+Math.random()*2}s;animation-delay:${Math.random()*.6}s;width:${6+Math.random()*6}px;height:${10+Math.random()*8}px`;document.body.appendChild(e);setTimeout(()=>e.remove(),4800)}}
+let mx=innerWidth/2,my=200,raf=0;
+function track(){$$('.appi').forEach(a=>{const r=a.getBoundingClientRect(),dx=mx-(r.left+r.width/2),dy=my-(r.top+r.height*.45),d=Math.hypot(dx,dy)||1,k=Math.min(1,d/160);a.style.setProperty('--px',(dx/d*3.4*k).toFixed(2)+'px');a.style.setProperty('--py',(dy/d*3.4*k).toFixed(2)+'px');a.style.setProperty('--rot',(dx/d*k*7).toFixed(1)+'deg')})}
+addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(!raf)raf=requestAnimationFrame(()=>{raf=0;track()})});
+let pk=0,pkT=0;
+function poke(a){const n=Date.now();pk=n-pkT<1200?pk+1:1;pkT=n;sfx.pop();if(pk>=5){pk=0;appi(a,'wow','spin',1100);return bubble(a,'Mir wird schwindelig!')}
+ const r=pick([['happy','jump','Uh-uh-ah-ah!'],['wow','shake','Hihi, das kitzelt!'],['happy','spin','Wheee!'],['happy','wave','Hallo, ich bin Appi!'],['wow','jump','Hast du Bananen dabei?']]);appi(a,r[0],r[1],1200);bubble(a,r[2])}
+function react(ok){const a=$('#les .appi');if(!a)return;const r=a.getBoundingClientRect();
+ if(ok){sfx.ok();const c=L.combo;appi(a,'happy',c>=3?'dance':'jump',1100);bubble(a,c>=3?`${c}er-Serie!`:pick(['Richtig!','Super!','Affengeil!','Stark!','Ooh-ooh-aah!']));floatTxt('+10 XP',r.right+8,r.top+20)}
+ else{sfx.no();appi(a,'sad','shake',1300);bubble(a,pick(['Ups!','Fast!','Nicht schlimm!','Nochmal versuchen!']))}}
+function langsCard(){return '<div class="card">'+Object.keys(S.langs).map(id=>{const c=C.find(x=>x.id===id),p=S.langs[id],l=lvl(p.xp);return c?`<div class="row"><span class="badge">${c.code}</span><div><b>${c.name}</b><div class="mu sm">Level ${l} · ${lvName(l)} · ${p.xp} XP</div></div></div>`:''}).join('')+'</div>'}
+let T=null;
+function tutorial(){T={step:0,sel:null,ok:false,opts:[0,1,2].sort(()=>Math.random()-.5),r:['happy','wave',1700]};tutUI()}
+function tutUI(){let el=$('#tut');if(!el){el=document.createElement('div');el.id='tut';el.className='ov';el.style.zIndex=70;document.body.appendChild(el)}
+ const c=cur(),s=T.step,w=c.ph[0][0];
+ const B=[`<h3>Willkommen bei ${c.name}!</h3><p class="mu">Ich bin <b>Appi</b>, dein Affen-Lehrer. Gemeinsam lernen wir ${c.name} Schritt für Schritt. Jede Sprache hat bei mir ihren <b>eigenen Lernpfad und ein eigenes Level</b>. Du kannst jederzeit wechseln und machst dort weiter, wo du aufgehört hast.</p>`,
+ `<h3>So funktioniert eine Aufgabe</h3><p class="mu">Ich zeige dir ein Wort, du wählst die Bedeutung. Probier es aus: Was heißt <b>${esc(w)}</b>?</p><div class="opts" style="grid-template-columns:1fr">${T.opts.map(k=>`<button class="opt ${T.sel===k?(k===0?'ok':'no'):''}" data-a="tpick" data-k="${k}" ${T.ok?'disabled':''}>${DE[k]}</button>`).join('')}</div>`,
+ `<h3>Herzen, XP und Streak</h3><div class="row"><span class="big">@@heart@@</span><div><b>Herzen</b><div class="mu sm">Ein Fehler kostet ein Herz. Alle 10 Minuten kommt eins zurück.</div></div></div><div class="row"><span class="big">@@bolt@@</span><div><b>XP und Level</b><div class="mu sm">10 XP pro richtiger Antwort. Alle 100 XP steigst du in dieser Sprache ein Level auf.</div></div></div><div class="row"><span class="big">@@flame@@</span><div><b>Streak</b><div class="mu sm">Übe jeden Tag, damit deine Flamme weiterbrennt.</div></div></div>`,
+ `<h3>Tipps zum Schluss</h3><div class="row"><span class="big">@@star@@</span><div><b>Tasten</b><div class="mu sm">1–4 wählt eine Antwort, Enter prüft und geht weiter, Esc schließt Fenster.</div></div></div><div class="row"><span class="big">@@gem@@</span><div><b>Shop und Quests</b><div class="mu sm">Löse Quests ein und kaufe Herzen, Streak-Schutz oder XP-Boosts.</div></div></div><div class="row"><span class="big">@@banana@@</span><div><b>Und ich?</b><div class="mu sm">Klick mich an. Ich folge deinem Cursor und freue mich über jede Antwort.</div></div></div>`];
+ el.innerHTML=H`<div class="modal tut"><div class="tdots">${[0,1,2,3].map(i=>`<i class="${i<=s?'on':''}"></i>`).join('')}<button class="x" data-a="tskip" aria-label="Überspringen">@@x@@</button></div><div class="tgrid">${monkey(180)}<div>${B[s]}</div></div><div class="tfoot"><span class="mu sm">Schritt ${s+1} von 4</span><button class="btn" data-a="tnext" ${s===1&&!T.ok?'disabled':''}>${s===3?'Los geht’s!':'Weiter'}</button></div></div>`;
+ track();if(T.r){appi($('#tut .appi'),...T.r);T.r=null}}
+function tend(){P().intro=true;save();$('#tut')?.remove();T=null;render();sfx.win();setTimeout(()=>{const a=$('.hero .appi');appi(a,'happy','dance',2500);bubble(a,'Los geht’s!')},250)}
+
+const goalXp=()=>(GOALS.find(g=>g[0]===S.goal)||GOALS[1])[3];
+function tick(){const t=dstr();if(S.day!==t){S.day=t;S.dXp=S.dLes=S.dOk=0;S.claimed=[]}
+ if(S.hearts<5&&S.heartT){const n=Math.floor((Date.now()-S.heartT)/6e5);if(n>0){S.hearts=Math.min(5,S.hearts+n);S.heartT=S.hearts>=5?0:S.heartT+n*6e5}}save()}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2400)}
+function speak(t){if(!S.sound||!('speechSynthesis' in window))return toast('Sprachausgabe nicht verfügbar.');speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=LANG[S.course]||'en-GB';speechSynthesis.speak(u)}
+const ph=i=>cur().ph[i];
+/* Seiten */
+function home(){const lx=P().xp,l=lvl(lx),n=Object.keys(P().done).length,pc=Math.round(n/NODES.length*100),open=openNode();
+ return `<h1>Dein Lernpfad</h1><div class="mu">${cur().name} · Level ${l} · ${lvName(l)}</div>
+ <div class="hero"><svg class="hl" viewBox="0 0 100 100"><use href="#leaf"/></svg>${monkey(165)}<div style="flex:1"><h2>${new Date().getHours()<11?'Guten Morgen':new Date().getHours()<18?'Hallo':'Guten Abend'}, ich bin Appi!</h2><p>Heute zusammen ${cur().name} lernen? Schon ein paar Minuten bringen dich weiter.</p><button class="btn" data-a="node" data-i="${open}">@@banana@@ Weiterlernen</button></div></div>
+ <div class="card lvl"><div class="lv">${l}</div><div style="flex:1"><b>${lvName(l)}</b><div class="mu sm" style="margin-bottom:6px">${lx%100} / 100 XP bis Level ${l+1}</div><div class="bar"><i style="width:${lx%100}%"></i></div></div></div><div style="display:flex;justify-content:space-between;margin-top:18px" class="mu sm"><span>Fortschritt</span><b>${pc}%</b></div><div class="bar"><i style="width:${pc}%"></i></div>
+ <div class="path">${NODES.map((nd,i)=>{const d=P().done[i],un=i===0||P().done[i-1],cl=d?'done':un?(i===open?'cur':''):'lock';const off=Math.round(Math.sin(i*1.2)*70);
+ return `<div style="transform:translateX(${off}px)"><button class="node ${cl}" data-a="node" data-i="${i}" aria-label="${nd[1]}">${d?'@@check@@':un?nd[0]:'@@lock@@'}</button><div class="nl">${nd[1]}</div></div>`}).join('')}</div>`}
+function practice(){const T=[['review','@@target@@','Fehler wiederholen','Festige schwierige Ausdrücke.'],['vocab','@@book@@','Wortschatz','Alle Ausdrücke, gemischt.'],['listen','@@headphones@@','Hören','Höre zu und wähle die Bedeutung.'],['quick','@@bolt@@','Schnellrunde','Fünf Aufgaben, schnell erledigt.']];
+ return `<div class="corner">${monkey(100)}</div><h1>Üben</h1><div class="mu">Trainiere in deinem Tempo und sammle XP.</div><div class="grid2" style="margin-top:20px">${T.map(t=>`<button class="pc" data-a="start" data-t="${t[0]}"><span class="e">${t[1]}</span><b>${t[2]}</b><span class="mu sm">${t[3]}</span></button>`).join('')}</div>
+ <h2>Wortschatz · ${cur().name}</h2><div class="card">${cur().ph.map((p,i)=>`<div class="row"><div><b>${esc(p[0])}</b>${p[1]?` <span class="mu sm">(${esc(p[1])})</span>`:''}<div class="mu sm">${DE[i]}</div></div><button class="btn alt" data-a="say" data-i="${i}" aria-label="Vorlesen">@@speaker@@</button></div>`).join('')}</div>`}
+function league(){const P=[['Mira',920],['Noah',810],['Lina',735],['Du',S.xp],['Sam',490],['Emi',310]].sort((a,b)=>b[1]-a[1]);
+ return `<div class="corner">${monkey(100)}</div><h1>Liga</h1><div class="mu">Lokale Beispiel-Rangliste – keine Online-Spieler.</div><div class="card" style="margin-top:20px">${P.map((p,i)=>`<div class="row" style="${p[0]==='Du'?'background:#1f3d28;border-radius:12px;padding:12px':''}"><b style="width:26px">${i+1}</b><span style="font-size:22px">${p[0]==='Du'?'@@kikoface@@':'@@face@@'}</span><div>${p[0]}</div><b style="color:var(--bn)">${p[1]} XP</b></div>`).join('')}</div>`}
+function shop(){const I=[['heart','@@heart@@','Herz auffüllen','+1 Herz',50],['freeze','@@snow@@','Streak-Schutz','Rettet deinen Streak, wenn du einen Tag verpasst. Du hast: '+S.freeze,200],['boost','@@bolt@@','XP-Boost','Doppelte XP in der nächsten Lektion'+(S.boost?' (aktiv)':''),80]];
+ return `<div class="corner">${monkey(100)}</div><h1>Shop</h1><div class="mu">Juwelen sind reine Spielpunkte – es entstehen keine Kosten.</div><div class="card" style="margin:20px 0;display:flex;justify-content:space-between"><b>@@gem@@ Deine Juwelen</b><b style="color:var(--bl);font-size:20px">${S.gems}</b></div>${I.map(i=>`<div class="card row" style="margin-bottom:12px;border-bottom:2px solid var(--ln)"><span style="font-size:34px">${i[1]}</span><div><b>${i[2]}</b><div class="mu sm">${i[3]}</div></div><button class="btn" data-a="buy" data-id="${i[0]}" ${S.gems<i[4]?'disabled':''}>@@gem@@ ${i[4]}</button></div>`).join('')}`}
+function profile(){return `<h1>Profil</h1><div class="card" style="text-align:center;margin-top:20px">${monkey(110)}<h2 style="margin:6px 0">Sprachfreund</h2><div class="mu">Lernt ${cur().name}</div><div class="stat" style="margin:18px 0 0"><div>${S.xp}<small>Gesamt-XP</small></div><div>${S.streak}<small>Tage Streak</small></div><div>${S.lessons}<small>Lektionen</small></div></div></div>
+ <h2>Deine Sprachen</h2>${langsCard()}<h2>Einstellungen</h2><div class="card"><div class="row"><div><b>Tagesziel</b><div class="mu sm">${goalXp()} XP pro Tag</div></div><button class="btn alt" data-a="goal">Ändern</button></div><div class="row"><div><b>Sprachausgabe</b><div class="mu sm">Wörter vorlesen lassen</div></div><button class="toggle ${S.sound?'on':''}" data-a="snd" aria-label="Sprachausgabe"><span></span></button></div><div class="row"><div><b>Soundeffekte</b><div class="mu sm">Töne bei Antworten und Belohnungen</div></div><button class="toggle ${S.sfx?'on':''}" data-a="sfx" aria-label="Soundeffekte"><span></span></button></div><div class="row"><div><b>Fortschritt zurücksetzen</b><div class="mu sm">Löscht alle lokalen Daten</div></div><button class="btn alt" data-a="reset">Zurücksetzen</button></div></div>`}
+function quests(){const Q=[['xp','@@bolt@@',`Sammle ${goalXp()} XP`,S.dXp,goalXp(),10],['les','@@book@@','Schließe 1 Lektion ab',S.dLes,1,5],['ok','@@target@@','5 richtige Antworten',S.dOk,5,10]];
+ return Q.map(q=>{const d=q[3]>=q[4],c=S.claimed.includes(q[0]);return `<div class="row"><span style="font-size:24px">${q[1]}</span><div><div class="sm">${q[2]}</div><div class="bar" style="height:8px;margin-top:6px"><i style="width:${Math.min(100,q[3]/q[4]*100)}%"></i></div></div>${c?'@@ok@@':d?`<button class="btn" style="padding:6px 10px" data-a="claim" data-id="${q[0]}" data-g="${q[5]}">@@gem@@${q[5]}</button>`:`<span class="mu sm">@@gem@@${q[5]}</span>`}</div>`}).join('')}
+function view(){const PG={home,practice,league,shop,profile}[S.tab]||home;
+ return `<div class="app"><aside class="side"><div class="logo">${monkey(44,'')}lingo</div><nav class="nav" aria-label="Hauptmenü">${TABS.map(t=>`<button class="${S.tab===t[0]?'on':''}" data-a="tab" data-t="${t[0]}"><span class="ic">${t[1]}</span>${t[2]}</button>`).join('')}</nav><button class="langbtn" data-a="courses"><span class="badge">${cur().code}</span><span style="flex:1;text-align:left"><b>${cur().name}</b><small class="mu" style="display:block">Level ${lvl(P().xp)}</small></span>@@chev@@</button></aside>
+ <main class="main">${PG()}</main>
+ <aside class="right"><div class="stat"><div>@@flame@@${S.streak}<small>Streak</small></div><div>@@gem@@${S.gems}<small>Juwelen</small></div><div>@@heart@@${S.hearts}<small>Herzen</small></div></div>
+ <div class="card"><b>Tägliche Quests</b>${quests()}</div><div class="card" style="margin-top:16px;display:flex;gap:12px;align-items:center">${monkey(84)}<div class="sm mu">Tipp von Appi: Mit Taste 1–4 wählst du Antworten, mit Enter geht’s weiter.</div></div></aside></div>`}
+function render(){tick();$('#root').innerHTML=H(view());if(L)lessonUI();track()}
+/* Lektionen */
+function openNode(){for(let i=0;i<NODES.length;i++)if(!P().done[i])return i;return 0}
+function start(type,node){tick();if(S.hearts<=0)return modal('Keine Herzen mehr','<p class="mu">Kaufe im Shop ein Herz oder warte – alle 10 Minuten kommt eines zurück.</p>');
+ let idx=[...cur().ph.keys()];if(type==='listen')idx=idx.slice(1);idx.sort(()=>Math.random()-.5);const n=type==='quick'?5:type==='node'?6:8;
+ L={type,node,idx:idx.slice(0,n),i:0,ok:0,xp:0,sel:null,fb:null,fail:false,fin:false};L.q=mkQ();lessonUI()}
+function mkQ(){const p=L.idx[L.i],mode=L.i%3===2&&L.type!=='listen'?'type':'choice',rev=L.i%2===1&&mode==='choice';
+ const q={p,mode,rev,listen:L.type==='listen'};q.prompt=mode==='type'||!rev?cur().ph[p][0]:DE[p];q.ans=mode==='type'||!rev?DE[p]:cur().ph[p][0];
+ if(mode==='choice'){const all=[...DE.keys()].filter(k=>k!==p).sort(()=>Math.random()-.5).slice(0,3);q.opts=[p,...all].sort(()=>Math.random()-.5).map(k=>rev?cur().ph[k][0]:DE[k])}return q}
+const norm=s=>s.toLowerCase().replace(/[.!?,]/g,'').trim();
+function lessonUI(){lessonUI0();track()}
+function lessonUI0(){let el=$('#les');if(!el){el=document.createElement('div');el.id='les';el.className='les';document.body.appendChild(el)}
+ if(L.fin||L.fail){const w=L.fail;if(!L.rx){L.rx=1;setTimeout(()=>{const a=$('#les .appi');if(L.fail)appi(a,'sad','shake',1500);else{appi(a,'happy','dance',3000);confetti();sfx.win()}},80)}el.innerHTML=H`<div class="les-in"><div class="done">${monkey(190)}<h1>${w?'Keine Herzen mehr':L.ok>=L.idx.length*.8?'Affenstark!':'Lektion geschafft!'}</h1><div class="mu">${w?'Appi braucht eine Pause. Hol dir im Shop ein Herz oder versuch es später wieder.':'Jede Runde bringt neue Wörter ins Gedächtnis.'}</div>${L.up?`<div class="up">Level-Up! Level ${L.up} · ${lvName(L.up)}</div>`:''}<div class="res"><div>+${L.xp}<small>XP</small></div><div>${L.ok}/${L.idx.length}<small>Richtig</small></div><div>${w?0:5}<small>Juwelen</small></div></div><button class="btn" data-a="leave">Weiter</button></div></div>`;return}
+ const q=L.q;const lab={node:'Lernpfad',review:'Wiederholung',vocab:'Wortschatz',listen:'Hörverständnis',quick:'Schnellrunde'}[L.type];
+ el.innerHTML=H`<div class="les-in"><div class="les-top"><button class="x" data-a="exit" aria-label="Beenden">@@x@@</button><div class="bar"><i style="width:${L.i/L.idx.length*100}%"></i></div><b class="hrt ${L.fb==='w'?'lost':''}">@@heart@@ ${S.hearts}</b></div>
+ <div class="mu sm" style="margin-top:26px">${lab} · Aufgabe ${L.i+1} von ${L.idx.length}</div><h1 style="margin-top:6px">${q.mode==='type'?'Schreibe auf Deutsch':q.rev?'Wie sagt man das?':'Was bedeutet das?'}</h1>
+ <div class="q">${monkey(165)}<div class="say">${q.listen?'@@headphones@@ ':''}${esc(q.listen?'Tippe auf @@speaker@@':q.prompt)}</div><button class="btn alt" data-a="sayq" aria-label="Vorlesen">@@speaker@@</button></div>
+ ${q.mode==='type'?`<input class="ti" id="ti" autocomplete="off" placeholder="Deine Antwort …" ${L.fb?'disabled':''} value="${esc(L.sel||'')}">`:`<div class="opts">${q.opts.map((o,k)=>`<button class="opt ${L.sel===o?'sel':''} ${L.fb?(o===q.ans?'ok':L.sel===o?'no':''):''}" data-a="pick" data-v="${esc(o)}" ${L.fb?'disabled':''}><kbd>${k+1}</kbd>${esc(o)}</button>`).join('')}</div>`}</div>
+ <div class="foot ${L.fb==='r'?'good':L.fb?'bad':''}"><div class="foot-in">${L.fb?`<div><h3>${L.fb==='r'?'@@ok@@ Richtig!':'@@no@@ Nicht ganz'}</h3>${L.fb==='r'?'':`<div class="mu">Richtig wäre: ${esc(q.ans)}</div>`}</div><button class="btn ${L.fb==='r'?'':'red'}" data-a="next">${L.i===L.idx.length-1?'Ergebnis':'Weiter'}</button>`:`<span class="mu sm">Enter zum Prüfen</span><button class="btn" data-a="check" ${L.sel?'':'disabled'}>Prüfen</button>`}</div></div>`;
+ const ti=$('#ti');if(ti&&!L.fb){ti.focus();ti.addEventListener('input',()=>{L.sel=ti.value.trim()||null;$('[data-a=check]').disabled=!L.sel})}}
+function check(){if(!L||!L.sel||L.fb)return;const q=L.q,ok=q.mode==='type'?norm(L.sel)===norm(q.ans):L.sel===q.ans;L.fb=ok?'r':'w';
+ if(ok){L.ok++;L.xp+=10;S.dOk++;L.combo=(L.combo||0)+1}else{L.combo=0;if(S.hearts>=5)S.heartT=Date.now();S.hearts=Math.max(0,S.hearts-1)}save();render();react(ok)}
+function next(){if(S.hearts<=0&&L.fb==='w'){L.fail=true;L.xp=0;return lessonUI()}
+ if(L.i<L.idx.length-1){L.i++;L.sel=null;L.fb=null;L.q=mkQ();return lessonUI()}finish()}
+function finish(){if(S.boost&&L.xp){L.xp*=2;S.boost=false}const t=dstr(),b4=lvl(P().xp);P().xp+=L.xp;P().lessons++;L.up=lvl(P().xp)>b4?lvl(P().xp):0;S.xp+=L.xp;S.dXp+=L.xp;S.dLes++;S.lessons++;S.gems+=5;
+ if(S.last!==t){const g=S.last?daysBetween(S.last,t):1;if(g===1)S.streak++;else if(g===2&&S.freeze>0){S.freeze--;S.streak++}else S.streak=1;S.last=t}
+ if(L.type==='node')P().done[L.node]=true;save();L.fin=true;lessonUI()}
+function leave(){L=null;$('#les')?.remove();render()}
+/* Dialoge */
+function modal(title,body){closeM();M=document.createElement('div');M.className='ov';M.innerHTML=H`<div class="modal" role="dialog" aria-modal="true"><h3>${title}</h3>${body}<button class="btn alt" data-a="closeM" style="width:100%;margin-top:18px">Schließen</button></div>`;(L?$('#les'):document.body).appendChild(M);M.addEventListener('click',e=>{if(e.target===M)closeM()})}
+function closeM(){M?.remove();M=null}
+const picker=(items,sel,act)=>`<div style="display:grid;gap:10px">${items.map(i=>`<button class="opt ${sel===i[0]?'sel':''}" data-a="${act}" data-id="${i[0]}"><b>${i[1]}</b><span class="mu sm">${i[2]||''}</span></button>`).join('')}</div>`;
+const A={
+ tab(d){S.tab=d.t;save();render();$('.main').classList.add('anim');sfx.pop();if(d.t==='home')setTimeout(()=>appi($('.hero .appi'),'happy','wave',1400),250)},node(d){const i=+d.i;if(i===0||P().done[i-1])start('node',i);else toast('Schließe zuerst den vorherigen Schritt ab.')},
+ start(d){start(d.t,0)},say(d){speak(cur().ph[+d.i][0])},sayq(){speak(L.q.mode==='type'||!L.q.rev?L.q.prompt:L.q.ans)},
+ pick(d){if(L.fb)return;L.sel=d.v;lessonUI()},check,next,leave,closeM,
+ exit(){modal('Lektion verlassen?','<p class="mu">Der Fortschritt dieser Runde geht verloren.</p><button class="btn red" data-a="leave" style="width:100%;margin-top:14px">Beenden</button>')},
+ courses(){modal('Sprache wählen','<p class="mu sm" style="margin:-6px 0 14px">Jede Sprache hat ihr eigenes Level und ihren eigenen Lernpfad.</p><div style="display:grid;gap:10px">'+C.map(c=>{const p=S.langs[c.id],l=lvl(p?p.xp:0),n=p?Object.keys(p.done).length:0;return `<button class="opt ${S.course===c.id?'sel':''}" data-a="setc" data-id="${c.id}"><span class="badge">${c.code}</span><span style="flex:1"><b>${c.name}</b><span class="mu sm" style="display:block">${p&&p.intro?`Level ${l} · ${lvName(l)} · ${n}/${NODES.length} Schritte`:'Neu – startet mit Tutorial'}</span></span>${p&&p.intro?'':'@@star@@'}</button>`}).join('')+'</div>')},
+ setc(d){closeM();if(S.course===d.id)return;S.course=d.id;const first=!P().intro;save();render();$('.main').classList.add('anim');if(first)tutorial();else{toast(`${cur().name}: Level ${lvl(P().xp)} – weiter geht’s!`);sfx.pop();setTimeout(()=>{const a=$('.hero .appi');appi(a,'happy','jump',900);bubble(a,`Weiter mit ${cur().name}!`)},250)}},
+ tnext(){if(T.step<3){T.step++;T.r=T.step===2?['wow','jump',900]:null;tutUI()}else tend()},tskip(){tend()},
+ tpick(d){const k=+d.k;T.sel=k;if(k===0){T.ok=true;T.r=['happy','jump',1000];sfx.ok()}else{T.r=['sad','shake',900];sfx.no()}tutUI();bubble($('#tut .appi'),k===0?pick(['Genau!','Richtig!','Affengut!']):'Fast! Versuch es nochmal.')},
+ sfx(){S.sfx=!S.sfx;save();render()},
+ goal(){modal('Tagesziel',picker(GOALS.map(g=>[g[0],g[1],g[2]]),S.goal,'setg'))},setg(d){S.goal=d.id;save();closeM();render()},
+ snd(){S.sound=!S.sound;save();render()},
+ claim(d){if(S.claimed.includes(d.id))return;S.claimed.push(d.id);S.gems+=+d.g;save();render();sfx.ok();const a=$('.right .appi');appi(a,'happy','jump',900);bubble(a,'Juwelen!');toast(`+${d.g} Juwelen!`)},
+ buy(d){const c={heart:50,freeze:200,boost:80}[d.id];if(S.gems<c)return toast('Nicht genug Juwelen.');
+  if(d.id==='heart'&&S.hearts>=5)return toast('Du hast schon volle Herzen.');if(d.id==='boost'&&S.boost)return toast('Boost ist schon aktiv.');
+  S.gems-=c;if(d.id==='heart')S.hearts++;if(d.id==='freeze')S.freeze++;if(d.id==='boost')S.boost=true;if(S.hearts>=5)S.heartT=0;save();render();sfx.pop();const a=$('.corner .appi');appi(a,'happy','jump',900);bubble(a,'Gekauft! Danke!');toast('Gekauft!')},
+ reset(){modal('Wirklich zurücksetzen?','<p class="mu">Alle XP, Juwelen und Fortschritte werden gelöscht.</p><button class="btn red" data-a="doreset" style="width:100%;margin-top:14px">Zurücksetzen</button>')},
+ doreset(){S=fresh();save();closeM();render();setTimeout(tutorial,300)}
+};
+document.addEventListener('click',e=>{const ap=e.target.closest('.appi');if(ap&&!e.target.closest('[data-a]')){poke(ap);return}const b=e.target.closest('[data-a]');if(b&&A[b.dataset.a])A[b.dataset.a](b.dataset)});
+document.addEventListener('keydown',e=>{if(M&&e.key==='Escape')return closeM();if(!L||L.fin||L.fail||M)return;
+ if(e.key==='Enter'){e.preventDefault();L.fb?next():check()}
+ else if(!L.fb&&L.q.mode==='choice'&&/^[1-4]$/.test(e.key)){L.sel=L.q.opts[+e.key-1];lessonUI()}});
+render();$('.main').classList.add('anim');
+if(!P().intro)setTimeout(tutorial,350);else setTimeout(()=>{const a=$('.hero .appi');appi(a,'happy','wave',1600);bubble(a,'Hallo! Weiter mit '+cur().name+'?')},600);
+setInterval(()=>{if(L)return;const h=S.hearts;tick();if(S.hearts!==h)render()},60000);
+setInterval(()=>{if(L||T||M)return;const a=$('.hero .appi')||$('.corner .appi')||$('.right .appi');if(a)appi(a,'happy',pick(['wave','dance','jump']),1500)},13000);
+})();
+</script>
+</body>
+</html>
