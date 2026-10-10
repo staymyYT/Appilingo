@@ -117,6 +117,13 @@ h1{font-size:30px;margin:0 0 4px;letter-spacing:-.5px}h2{font-size:20px;margin:2
 .tut{width:min(720px,100%)}.tgrid{display:grid;grid-template-columns:190px 1fr;gap:20px;align-items:center;margin:14px 0 18px}
 .tdots{display:flex;align-items:center;gap:8px}.tdots i{width:34px;height:8px;border-radius:9px;background:var(--ln)}.tdots i.on{background:var(--gr)}.tdots .x{margin-left:auto}
 .tfoot{display:flex;justify-content:space-between;align-items:center}.big{font-size:26px}
+
+.ta{width:100%;padding:12px;border-radius:14px;border:2px solid var(--ln);background:var(--p);font:12px/1.4 Consolas,monospace;resize:none;color:var(--tx)}
+.chip{padding:8px 14px;border-radius:99px;border:2px solid var(--ln);background:var(--p2)}.chip.on{border-color:var(--gr);background:#1f4a24}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.witem{background:var(--p);border:2px solid var(--ln);border-radius:16px;padding:12px;text-align:center;display:grid;gap:8px;justify-items:center}.witem.on{border-color:var(--gr)}.wprev{padding-top:16px;height:104px}
+.frow{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:12px 16px;background:var(--p);border:2px solid var(--ln);border-radius:16px;margin-bottom:10px;transition:border-color .15s,transform .15s}.frow>div{flex:1}.frow:hover{border-color:var(--gr);transform:translateX(4px)}
+.lrow{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--ln)}.lrow>div{flex:1}
 </style>
 </head>
 <body>
@@ -141,6 +148,7 @@ h1{font-size:30px;margin:0 0 4px;letter-spacing:-.5px}h2{font-size:20px;margin:2
 <path d="M78 100c10-10 24-6 28 8-12 0-22-2-28-8z" fill="url(#gBan)" stroke="#b8860b" stroke-width="2" stroke-linejoin="round"/><path d="M104 104l5-4" stroke="#6b4020" stroke-width="3" stroke-linecap="round"/>
 <circle cx="80" cy="102" r="7" fill="#8a5524"/></symbol>
 <symbol id="leaf" viewBox="0 0 100 100"><path d="M8 96C4 50 30 10 92 4C96 60 60 94 8 96Z" fill="#2f6b3a"/><path d="M8 96C30 60 55 35 92 4M30 72l16 2M40 56l17 4M54 42l16 2M24 82l-4-14" fill="none" stroke="#4f9a55" stroke-width="3" stroke-linecap="round"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="4" fill="#5cc8ff"/><path d="M1.5 21a7.5 7.5 0 0 1 15 0z" fill="#3fa9e0"/><circle cx="17" cy="9" r="3.2" fill="#ffd23f"/><path d="M13.5 21a6 6 0 0 1 9.5-4.6V21z" fill="#e0a800"/></symbol>
 <symbol id="i-kikoface" viewBox="14 6 92 84"><use href="#kiko"/></symbol>
 <symbol id="i-banana" viewBox="0 0 24 24"><path d="M4 16c5 5 14 2 17-9l-3-1c-1 6-5 9-11 7z" fill="#ffd23f" stroke="#b8860b" stroke-width="1.5" stroke-linejoin="round"/><path d="M18 6l1.5-3" stroke="#6b4020" stroke-width="2.2" stroke-linecap="round"/></symbol>
 <symbol id="i-lock" viewBox="0 0 24 24"><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="#9db8a8" stroke-width="2.2"/><rect x="5" y="11" width="14" height="10" rx="2.5" fill="#6f8a7b"/><circle cx="12" cy="16" r="1.8" fill="#22362d"/></symbol>
@@ -176,7 +184,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 /* Appi, der Affe */
 const APPI=`<g class="ab"><ellipse cx="60" cy="114" rx="26" ry="5" fill="#000" opacity=".25"/>
 <g class="arm"><path d="M30 96Q22 102 20 114" fill="none" stroke="#8a5524" stroke-width="11" stroke-linecap="round"/><circle cx="20" cy="114" r="7" fill="#7a4a20"/></g>
-<path d="M30 114c-2-22 10-34 30-34s32 12 30 34z" fill="url(#gFur)"/><ellipse cx="60" cy="104" rx="16" ry="14" fill="#f3d3ac"/>
+<path d="M30 114c-2-22 10-34 30-34s32 12 30 34z" fill="url(#gFur)"/><ellipse cx="60" cy="104" rx="16" ry="14" fill="#f3d3ac"/>%%NECK%%
 <g class="arm2"><path d="M88 94Q100 98 98 108" fill="none" stroke="#8a5524" stroke-width="11" stroke-linecap="round"/><path d="M92 106c8-14 22-10 26 6-12 3-21 1-26-6z" fill="url(#gBan)" stroke="#b8860b" stroke-width="2" stroke-linejoin="round"/><path d="M115 106l4-5" stroke="#6b4020" stroke-width="3" stroke-linecap="round"/><circle cx="96" cy="110" r="7" fill="#7a4a20"/></g>
 <g class="head"><circle cx="19" cy="56" r="14" fill="#8a5524"/><circle cx="19" cy="56" r="8" fill="#f0c597"/><circle cx="101" cy="56" r="14" fill="#8a5524"/><circle cx="101" cy="56" r="8" fill="#f0c597"/>
 <ellipse cx="60" cy="52" rx="39" ry="38" fill="url(#gFur)"/><path d="M50 17q10-9 20 0q-10-3-20 0z" fill="#7a4a20"/>
@@ -190,9 +198,9 @@ const APPI=`<g class="ab"><ellipse cx="60" cy="114" rx="26" ry="5" fill="#000" o
 <g class="v mh"><path d="M46 74q14 22 28 0z" fill="#7a2f2f" stroke="#5a3517" stroke-width="2.4" stroke-linejoin="round"/><path d="M52 83q8-7 16 0q-8 5-16 0z" fill="#ff8a8a"/></g>
 <path class="v ms" d="M50 83q10-10 20 0" fill="none" stroke="#5a3517" stroke-width="3" stroke-linecap="round"/><ellipse class="v mw" cx="60" cy="80" rx="5.5" ry="7" fill="#7a2f2f" stroke="#5a3517" stroke-width="2"/>
 <circle cx="36" cy="68" r="5" fill="#ff8f8f" opacity=".35"/><circle cx="84" cy="68" r="5" fill="#ff8f8f" opacity=".35"/>
-<path class="v tear" d="M33 64q-5 8 0 11q5-3 0-11z" fill="#6fd0ff"/>
+<path class="v tear" d="M33 64q-5 8 0 11q5-3 0-11z" fill="#6fd0ff"/>%%GLS%%%%HAT%%
 <g class="v spk" transform="translate(2 14)"><path d="M6 0l1.6 4.4L12 6l-4.4 1.6L6 12 4.4 7.6 0 6l4.4-1.6z" fill="#ffd23f"/></g><g class="v spk" transform="translate(104 8)"><path d="M6 0l1.6 4.4L12 6l-4.4 1.6L6 12 4.4 7.6 0 6l4.4-1.6z" fill="#ffd23f"/></g><g class="v spk" transform="translate(108 36)"><path d="M6 0l1.6 4.4L12 6l-4.4 1.6L6 12 4.4 7.6 0 6l4.4-1.6z" fill="#ffd23f"/></g></g></g>`;
-const monkey=(s=90,cls='')=>`<svg class="appi ${cls}" width="${s}" height="${s}" viewBox="0 0 120 120" role="img" aria-label="Appi der Affe">${APPI}</svg>`;
+const monkey=(s=90,cls='',o)=>{o=o||S.outfit||{};return `<svg class="appi ${cls}" width="${s}" height="${s}" viewBox="0 0 120 120" role="img" aria-label="Appi der Affe">${APPI.replace('%%NECK%%',OUT.nk[o.nk]||'').replace('%%GLS%%',OUT.gl[o.gl]||'').replace('%%HAT%%',OUT.hat[o.hat]||'')}</svg>`};
 const H=(a,...v)=>(Array.isArray(a)?a.reduce((r,s,i)=>r+s+(i<v.length?v[i]:''),''):a).replace(/@@(\w+)@@/g,(_,n)=>`<svg class="i" aria-hidden="true"><use href="#i-${n}"/></svg>`);
 /* Daten */
 const DE=['Hallo','Danke','Bitte','Guten Morgen','Wie geht es dir?','Ich heiße Alex.','Wo ist der Bahnhof?','Bis später!'];
@@ -209,12 +217,36 @@ const C=[
 const LANG={en:'en-GB',es:'es-ES',fr:'fr-FR',it:'it-IT',nl:'nl-NL',tr:'tr-TR',ja:'ja-JP',ru:'ru-RU'};
 const GOALS=[['easy','Entspannt','10 XP am Tag',10],['normal','Normal','30 XP am Tag',30],['serious','Ernsthaft','50 XP am Tag',50],['intense','Intensiv','80 XP am Tag',80]];
 const NODES=[['@@banana@@','Hallo!'],['@@book@@','Erste Wörter'],['@@headphones@@','Hörverständnis'],['@@star@@','Mini-Challenge'],['@@chat@@','Vorstellen'],['@@gift@@','Belohnung'],['@@repeat@@','Wiederholung'],['@@trophy@@','Abschlussprüfung']];
-const TABS=[['home','@@home@@','Lernpfad'],['practice','@@dumbbell@@','Üben'],['league','@@medal@@','Liga'],['shop','@@gem@@','Shop'],['profile','@@kikoface@@','Profil']];
-const DEF={course:'en',goal:'normal',tab:'home',xp:0,gems:100,hearts:5,heartT:0,streak:0,last:'',lessons:0,done:{},freeze:0,boost:false,day:'',dXp:0,dLes:0,dOk:0,claimed:[],sound:true,sfx:true,langs:{}};
+const TABS=[['home','@@home@@','Lernpfad'],['practice','@@dumbbell@@','Üben'],['league','@@medal@@','Liga'],['shop','@@gem@@','Shop'],['friends','@@users@@','Freunde'],['profile','@@kikoface@@','Profil']];
+
+const OUT={
+hat:{beanie:'<path d="M24 36C24 6 96 6 96 36Z" fill="#e0405a"/><path d="M22 34h76v9q-38 6-76 0z" fill="#b8283f"/><circle cx="60" cy="9" r="8" fill="#fff"/>',
+cap:'<path d="M28 36C28 8 92 8 92 36Z" fill="#3fa9e0"/><path d="M52 34h52q8 0 8 7h-60z" fill="#2a7fb0"/><circle cx="60" cy="14" r="3" fill="#8fdcff"/>',
+party:'<path d="M42 28L60 -8L78 28Z" fill="#b58cff"/><path d="M48 18l24 0M52 8l16 0" stroke="#ffd23f" stroke-width="3"/><circle cx="60" cy="-8" r="6" fill="#ff6b7a"/>',
+tophat:'<ellipse cx="60" cy="24" rx="34" ry="7" fill="#1c1c1c"/><path d="M40 24V-6h40v30z" fill="#2b2b2b"/><path d="M40 16h40v6H40z" fill="#e0405a"/>',
+crown:'<path d="M32 26L36 4L49 17L60 0L71 17L84 4L88 26Z" fill="#ffd23f" stroke="#c99a00" stroke-width="2.5" stroke-linejoin="round"/><circle cx="60" cy="19" r="3.5" fill="#ff6b7a"/><circle cx="43" cy="21" r="2.5" fill="#5cc8ff"/><circle cx="77" cy="21" r="2.5" fill="#5cc8ff"/>'},
+gl:{round:'<circle cx="45" cy="54" r="11.5" fill="#cfeaff" fill-opacity=".25" stroke="#3a2a18" stroke-width="3"/><circle cx="75" cy="54" r="11.5" fill="#cfeaff" fill-opacity=".25" stroke="#3a2a18" stroke-width="3"/><path d="M56.5 53q3.5-3 7 0M33.5 52L24 48M86.5 52L96 48" fill="none" stroke="#3a2a18" stroke-width="3" stroke-linecap="round"/>',
+sun:'<rect x="31" y="44" width="28" height="20" rx="8" fill="#141414"/><rect x="61" y="44" width="28" height="20" rx="8" fill="#141414"/><path d="M59 50h2M31 48L22 45M89 48L98 45" stroke="#141414" stroke-width="3.5" stroke-linecap="round"/><path d="M36 49l8 0M66 49l8 0" stroke="#5cc8ff" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>',
+mono:'<circle cx="75" cy="54" r="12.5" fill="#cfeaff" fill-opacity=".25" stroke="#c99a00" stroke-width="3"/><path d="M85 63Q96 80 88 106" fill="none" stroke="#c99a00" stroke-width="1.8"/>'},
+nk:{scarf:'<path d="M34 90q26 14 52 0v11q-26 14-52 0z" fill="#e0405a"/><path d="M70 100l7 16 9-3-4-16z" fill="#c5304a"/><path d="M42 94q18 8 36 0" fill="none" stroke="#ff9aa8" stroke-width="2" opacity=".7"/>',
+bow:'<path d="M60 97l-14-9v18zM60 97l14-9v18z" fill="#ff6b7a" stroke="#c43b4d" stroke-width="1.5" stroke-linejoin="round"/><circle cx="60" cy="97" r="4" fill="#c43b4d"/>',
+medal:'<path d="M42 88Q60 112 78 88" fill="none" stroke="#c99a00" stroke-width="3" stroke-linecap="round"/><circle cx="60" cy="106" r="7.5" fill="#ffd23f" stroke="#c99a00" stroke-width="2"/><path d="M60 101l1.6 3.4 3.6.4-2.7 2.4.8 3.5-3.3-1.9-3.3 1.9.8-3.5-2.7-2.4 3.6-.4z" fill="#c99a00"/>'}};
+const ITEMS=[['hat','beanie','Zipfelmütze',40],['hat','cap','Cap',60],['hat','party','Partyhut',80],['hat','tophat','Zylinder',120],['hat','crown','Krone',250],['gl','round','Nerd-Brille',50],['gl','sun','Sonnenbrille',90],['gl','mono','Monokel',150],['nk','scarf','Schal',60],['nk','bow','Fliege',80],['nk','medal','Goldkette',200]];
+const SLOTN={hat:'Hüte',gl:'Brillen',nk:'Halsschmuck'};
+const b64=s=>btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const unb64=s=>decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/'))));
+const newId=()=>Math.random().toString(36).slice(2,10);
+function cleanFriend(o){if(!o||typeof o!=='object')return null;const n=x=>Math.max(0,Math.min(1e6,Math.floor(+x)||0));
+ const f={id:String(o.id||o.i||'').replace(/[^a-z0-9]/gi,'').slice(0,12),n:String(o.n||'').replace(/[<>]/g,'').trim().slice(0,16),s:n(o.s),x:n(o.x),t:Math.max(0,Math.min(9e12,Math.floor(+o.t)||0)),a:Math.max(0,Math.min(9e12,Math.floor(+o.a)||0)),o:{},l:{}};
+ if(!f.id||!f.n)return null;
+ if(o.o&&typeof o.o==='object')for(const [k,v] of Object.entries(o.o))if(ITEMS.some(i=>i[0]===k&&i[1]===v))f.o[k]=v;
+ if(o.l&&typeof o.l==='object')for(const c of C){const v=o.l[c.id];if(Array.isArray(v))f.l[c.id]=[n(v[0]),Math.min(NODES.length,n(v[1]))]}
+ return f}
+const DEF={course:'en',goal:'normal',tab:'home',xp:0,gems:100,hearts:5,heartT:0,streak:0,last:'',lessons:0,done:{},freeze:0,boost:false,day:'',dXp:0,dLes:0,dOk:0,claimed:[],sound:true,sfx:true,langs:{},name:'Sprachfreund',uid:'',outfit:{},owned:[],friends:[]};
 const KEY='lingo_kiko_v2';
 let S=load(),L=null,M=null,tt;
 function fresh(){return JSON.parse(JSON.stringify(DEF))}
-function load(){let s;try{s={...fresh(),...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{s=fresh()}s.langs=s.langs||{};if(Object.keys(s.done||{}).length&&!s.langs[s.course])s.langs[s.course]={done:s.done,xp:s.xp,lessons:s.lessons,intro:true};s.done={};return s}
+function load(){let s;try{s={...fresh(),...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{s=fresh()}s.langs=s.langs||{};if(Object.keys(s.done||{}).length&&!s.langs[s.course])s.langs[s.course]={done:s.done,xp:s.xp,lessons:s.lessons,intro:true};s.done={};if(!s.uid)s.uid=newId();s.friends=(Array.isArray(s.friends)?s.friends:[]).map(cleanFriend).filter(Boolean);return s}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch{}}
 const dstr=(d=new Date())=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 const daysBetween=(a,b)=>Math.round((new Date(b+'T12:00')-new Date(a+'T12:00'))/864e5);
@@ -226,7 +258,7 @@ let AC;function tone(f,d=.12,w=0,ty='sine',v=.07){if(!S.sfx)return;try{AC=AC||ne
 const sfx={ok(){tone(660,.1);tone(880,.16,.09)},no(){tone(190,.28,0,'sawtooth',.045)},win(){[523,659,784,1047].forEach((f,i)=>tone(f,.22,i*.1))},pop(){tone(520,.08,0,'triangle');tone(780,.1,.05,'triangle')}};
 const MOODS=['happy','sad','wow','jump','spin','shake','wave','dance'];
 function appi(el,mood,act,ms=1200){if(!el)return;el.classList.remove(...MOODS);el.getBoundingClientRect();if(mood)el.classList.add(mood);if(act)el.classList.add(act);clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove(...MOODS),ms)}
-function bubble(el,txt,ms=1900){if(!el)return;$$('.bub').forEach(b=>b.remove());const r=el.getBoundingClientRect(),b=document.createElement('div');b.className='bub';b.textContent=txt;b.style.left=Math.max(80,Math.min(innerWidth-80,r.left+r.width/2))+'px';b.style.top=(r.top+6)+'px';document.body.appendChild(b);setTimeout(()=>b.remove(),ms)}
+function bubble(el,txt,ms=1900){if(!el)return;$$('.bub').forEach(b=>b.remove());const r=el.getBoundingClientRect(),b=document.createElement('div');b.className='bub';b.textContent=txt;b.style.left=Math.max(80,Math.min(innerWidth-80,r.left+r.width/2))+'px';b.style.top=Math.max(52,r.top+6)+'px';document.body.appendChild(b);setTimeout(()=>b.remove(),ms)}
 function floatTxt(txt,x,y){const f=document.createElement('div');f.className='fx';f.textContent=txt;f.style.left=x+'px';f.style.top=y+'px';document.body.appendChild(f);setTimeout(()=>f.remove(),1000)}
 function confetti(){const c=['#ffd23f','#58cc02','#5cc8ff','#ff6b7a','#b58cff'];for(let i=0;i<70;i++){const e=document.createElement('i');e.className='cf';e.style.cssText=`left:${Math.random()*100}vw;background:${c[i%5]};animation-duration:${2+Math.random()*2}s;animation-delay:${Math.random()*.6}s;width:${6+Math.random()*6}px;height:${10+Math.random()*8}px`;document.body.appendChild(e);setTimeout(()=>e.remove(),4800)}}
 let mx=innerWidth/2,my=200,raf=0;
@@ -249,7 +281,7 @@ function tutUI(){let el=$('#tut');if(!el){el=document.createElement('div');el.id
  `<h3>Tipps zum Schluss</h3><div class="row"><span class="big">@@star@@</span><div><b>Tasten</b><div class="mu sm">1–4 wählt eine Antwort, Enter prüft und geht weiter, Esc schließt Fenster.</div></div></div><div class="row"><span class="big">@@gem@@</span><div><b>Shop und Quests</b><div class="mu sm">Löse Quests ein und kaufe Herzen, Streak-Schutz oder XP-Boosts.</div></div></div><div class="row"><span class="big">@@banana@@</span><div><b>Und ich?</b><div class="mu sm">Klick mich an. Ich folge deinem Cursor und freue mich über jede Antwort.</div></div></div>`];
  el.innerHTML=H`<div class="modal tut"><div class="tdots">${[0,1,2,3].map(i=>`<i class="${i<=s?'on':''}"></i>`).join('')}<button class="x" data-a="tskip" aria-label="Überspringen">@@x@@</button></div><div class="tgrid">${monkey(180)}<div>${B[s]}</div></div><div class="tfoot"><span class="mu sm">Schritt ${s+1} von 4</span><button class="btn" data-a="tnext" ${s===1&&!T.ok?'disabled':''}>${s===3?'Los geht’s!':'Weiter'}</button></div></div>`;
  track();if(T.r){appi($('#tut .appi'),...T.r);T.r=null}}
-function tend(){P().intro=true;save();$('#tut')?.remove();T=null;render();sfx.win();setTimeout(()=>{const a=$('.hero .appi');appi(a,'happy','dance',2500);bubble(a,'Los geht’s!')},250)}
+function tend(){P().intro=true;save();$('#tut')?.remove();T=null;render();sfx.win();setTimeout(()=>{const a=$('.hero .appi');appi(a,'happy','dance',2500);bubble(a,'Los geht’s!')},250);setTimeout(offerPending,1200)}
 
 const goalXp=()=>(GOALS.find(g=>g[0]===S.goal)||GOALS[1])[3];
 function tick(){const t=dstr();if(S.day!==t){S.day=t;S.dXp=S.dLes=S.dOk=0;S.claimed=[]}
@@ -267,15 +299,39 @@ function home(){const lx=P().xp,l=lvl(lx),n=Object.keys(P().done).length,pc=Math
 function practice(){const T=[['review','@@target@@','Fehler wiederholen','Festige schwierige Ausdrücke.'],['vocab','@@book@@','Wortschatz','Alle Ausdrücke, gemischt.'],['listen','@@headphones@@','Hören','Höre zu und wähle die Bedeutung.'],['quick','@@bolt@@','Schnellrunde','Fünf Aufgaben, schnell erledigt.']];
  return `<div class="corner">${monkey(100)}</div><h1>Üben</h1><div class="mu">Trainiere in deinem Tempo und sammle XP.</div><div class="grid2" style="margin-top:20px">${T.map(t=>`<button class="pc" data-a="start" data-t="${t[0]}"><span class="e">${t[1]}</span><b>${t[2]}</b><span class="mu sm">${t[3]}</span></button>`).join('')}</div>
  <h2>Wortschatz · ${cur().name}</h2><div class="card">${cur().ph.map((p,i)=>`<div class="row"><div><b>${esc(p[0])}</b>${p[1]?` <span class="mu sm">(${esc(p[1])})</span>`:''}<div class="mu sm">${DE[i]}</div></div><button class="btn alt" data-a="say" data-i="${i}" aria-label="Vorlesen">@@speaker@@</button></div>`).join('')}</div>`}
-function league(){const P=[['Mira',920],['Noah',810],['Lina',735],['Du',S.xp],['Sam',490],['Emi',310]].sort((a,b)=>b[1]-a[1]);
- return `<div class="corner">${monkey(100)}</div><h1>Liga</h1><div class="mu">Lokale Beispiel-Rangliste – keine Online-Spieler.</div><div class="card" style="margin-top:20px">${P.map((p,i)=>`<div class="row" style="${p[0]==='Du'?'background:#1f3d28;border-radius:12px;padding:12px':''}"><b style="width:26px">${i+1}</b><span style="font-size:22px">${p[0]==='Du'?'@@kikoface@@':'@@face@@'}</span><div>${p[0]}</div><b style="color:var(--bn)">${p[1]} XP</b></div>`).join('')}</div>`}
 function shop(){const I=[['heart','@@heart@@','Herz auffüllen','+1 Herz',50],['freeze','@@snow@@','Streak-Schutz','Rettet deinen Streak, wenn du einen Tag verpasst. Du hast: '+S.freeze,200],['boost','@@bolt@@','XP-Boost','Doppelte XP in der nächsten Lektion'+(S.boost?' (aktiv)':''),80]];
  return `<div class="corner">${monkey(100)}</div><h1>Shop</h1><div class="mu">Juwelen sind reine Spielpunkte – es entstehen keine Kosten.</div><div class="card" style="margin:20px 0;display:flex;justify-content:space-between"><b>@@gem@@ Deine Juwelen</b><b style="color:var(--bl);font-size:20px">${S.gems}</b></div>${I.map(i=>`<div class="card row" style="margin-bottom:12px;border-bottom:2px solid var(--ln)"><span style="font-size:34px">${i[1]}</span><div><b>${i[2]}</b><div class="mu sm">${i[3]}</div></div><button class="btn" data-a="buy" data-id="${i[0]}" ${S.gems<i[4]?'disabled':''}>@@gem@@ ${i[4]}</button></div>`).join('')}`}
-function profile(){return `<h1>Profil</h1><div class="card" style="text-align:center;margin-top:20px">${monkey(110)}<h2 style="margin:6px 0">Sprachfreund</h2><div class="mu">Lernt ${cur().name}</div><div class="stat" style="margin:18px 0 0"><div>${S.xp}<small>Gesamt-XP</small></div><div>${S.streak}<small>Tage Streak</small></div><div>${S.lessons}<small>Lektionen</small></div></div></div>
- <h2>Deine Sprachen</h2>${langsCard()}<h2>Einstellungen</h2><div class="card"><div class="row"><div><b>Tagesziel</b><div class="mu sm">${goalXp()} XP pro Tag</div></div><button class="btn alt" data-a="goal">Ändern</button></div><div class="row"><div><b>Sprachausgabe</b><div class="mu sm">Wörter vorlesen lassen</div></div><button class="toggle ${S.sound?'on':''}" data-a="snd" aria-label="Sprachausgabe"><span></span></button></div><div class="row"><div><b>Soundeffekte</b><div class="mu sm">Töne bei Antworten und Belohnungen</div></div><button class="toggle ${S.sfx?'on':''}" data-a="sfx" aria-label="Soundeffekte"><span></span></button></div><div class="row"><div><b>Fortschritt zurücksetzen</b><div class="mu sm">Löscht alle lokalen Daten</div></div><button class="btn alt" data-a="reset">Zurücksetzen</button></div></div>`}
+
+function myCode(){const l={};for(const id in S.langs)l[id]=[S.langs[id].xp,Object.keys(S.langs[id].done).length];return 'APPI-'+b64(JSON.stringify({i:S.uid,n:S.name,o:S.outfit,s:S.streak,x:S.xp,l,t:Date.now()}))}
+function myLink(){return location.href.split('#')[0]+'#f='+myCode().slice(5)}
+function parseCode(s){const m=(s||'').trim().match(/(?:#f=|APPI-)([A-Za-z0-9_-]+)/);if(!m)return null;try{return cleanFriend(JSON.parse(unb64(m[1])))}catch{return null}}
+function copy(txt){const done=()=>toast('Kopiert!');const fb=()=>{const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy')?done():toast('Bitte den Code von Hand kopieren.')}catch{toast('Bitte den Code von Hand kopieren.')}ta.remove()};
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(done,fb);else fb()}
+function addFriend(f){if(f.id===S.uid)return toast('Das ist dein eigener Code.');const i=S.friends.findIndex(x=>x.id===f.id);
+ if(i>=0){f.a=S.friends[i].a||Date.now();S.friends[i]=f;toast(`${f.n} aktualisiert.`)}else{if(S.friends.length>=30)return toast('Maximal 30 Freunde.');f.a=Date.now();S.friends.push(f);toast(`${f.n} ist jetzt dein Freund!`)}
+ save();sfx.ok();render();const a=$('.corner .appi');appi(a,'happy','jump',900);bubble(a,'Neuer Freund!')}
+function fBody(f){const ids=C.filter(c=>f.l[c.id]);
+ return `<div style="display:flex;gap:18px;align-items:center;margin-bottom:14px">${monkey(130,'',f.o)}<div><div class="mu sm">Gesamt</div><b style="font-size:24px">${f.x} XP</b><div class="mu sm" style="margin-top:6px">@@flame@@ ${f.s} Tage Streak</div><div class="mu sm">Stand: ${f.t?new Date(f.t).toLocaleDateString('de-DE'):'unbekannt'}</div></div></div><b>Sprachen (${ids.length})</b>`+
+ (ids.length?ids.map(c=>{const [x,d]=f.l[c.id],l=lvl(x);return `<div class="lrow"><span class="badge">${c.code}</span><div><b>${c.name}</b><div class="mu sm">Level ${l} · ${lvName(l)} · ${x} XP · ${d}/${NODES.length} Schritte</div><div class="bar" style="height:7px;margin-top:6px"><i style="width:${x%100}%"></i></div></div></div>`}).join(''):'<p class="mu sm">Noch keine Sprache gestartet.</p>')}
+function showFriend(id){const f=S.friends.find(x=>x.id===id);if(!f)return;modal('Profil von '+esc(f.n),fBody(f)+`<p class="mu sm" style="margin-top:12px">Für einen neuen Stand füge seinen aktuellen Code im Tab „Freunde" noch einmal ein.</p><button class="btn alt" data-a="frem" data-id="${f.id}" style="width:100%;margin-top:10px">Freund entfernen</button>`);track()}
+let PF=null,pendF=null;
+function offerPending(){if(!pendF||L||T||M)return;const f=pendF;pendF=null;if(f.id===S.uid)return;PF=f;modal('Freund hinzufügen?',fBody(f)+`<button class="btn" data-a="addp" style="width:100%;margin-top:14px">${S.friends.some(x=>x.id===f.id)?'Aktualisieren':'Hinzufügen'}</button>`);track()}
+function friendsPage(){const code=myCode();
+ return `<div class="corner">${monkey(100)}</div><h1>Freunde</h1><div class="mu">Tausche Codes mit Freunden und sieh ihr Profil mit allen Sprachen.</div>
+ <h2>Dein Freundescode</h2><div class="card"><textarea class="ta" readonly id="mycode" rows="3" aria-label="Dein Freundescode">${code}</textarea><div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap"><button class="btn" data-a="copyc">Code kopieren</button><button class="btn alt" data-a="copyc" data-w="link">Link kopieren</button></div><p class="mu sm">Er enthält deinen Namen, deine Sprachen mit Level und dein Outfit. Nach neuem Fortschritt schickst du am besten einen frischen Code.</p></div>
+ <h2>Freund hinzufügen</h2><div class="card" style="display:flex;gap:10px"><input class="ti" id="fin" placeholder="Code oder Link einfügen …" autocomplete="off" aria-label="Freundescode einfügen"><button class="btn" data-a="addf">Hinzufügen</button></div>
+ <h2>Deine Freunde (${S.friends.length})</h2>${S.friends.length?S.friends.map(f=>`<button class="frow" data-a="fview" data-id="${f.id}">${monkey(60,'',f.o)}<div><b>${esc(f.n)}</b><div class="mu sm">${Object.keys(f.l).length} Sprachen · ${f.x} XP · ${f.s} Tage Streak</div></div>@@chev@@</button>`).join(''):'<div class="card mu">Noch keine Freunde. Schick deinen Code an jemanden und füge seinen hier ein.</div>'}`}
+function league(){const P=[{n:S.name,x:S.xp,o:S.outfit,me:1},...S.friends].sort((a,b)=>b.x-a.x);
+ return `<div class="corner">${monkey(100)}</div><h1>Liga</h1><div class="mu">Du und deine Freunde, nach Gesamt-XP. Der Stand der Freunde ist der ihres letzten Codes.</div><div class="card" style="margin-top:20px">${P.map((p,i)=>`<div class="row" style="${p.me?'background:#1f3d28;border-radius:12px;padding:12px':''}"><b style="width:26px">${i+1}</b>${monkey(46,'',p.o)}<div>${esc(p.n)}${p.me?' (Du)':''}</div><b style="color:var(--bn)">${p.x} XP</b></div>`).join('')}</div>${S.friends.length?'':'<p class="mu sm" style="margin-top:14px">Noch allein hier. Im Tab „Freunde" kannst du Freunde hinzufügen.</p>'}`}
+function wardrobeShop(){return '<h2>Appi-Garderobe</h2>'+Object.keys(SLOTN).map(k=>`<div class="mu sm" style="margin:14px 0 8px"><b>${SLOTN[k]}</b></div><div class="wgrid">${ITEMS.filter(i=>i[0]===k).map(i=>{const own=S.owned.includes(k+':'+i[1]),on=S.outfit[k]===i[1];return `<div class="witem ${on?'on':''}"><div class="wprev">${monkey(84,'',{[k]:i[1]})}</div><b>${i[2]}</b>${own?`<button class="btn alt" data-a="wear" data-k="${k}" data-id="${i[1]}">${on?'Ausziehen':'Anziehen'}</button>`:`<button class="btn" data-a="buyc" data-k="${k}" data-id="${i[1]}" ${S.gems<i[3]?'disabled':''}>@@gem@@ ${i[3]}</button>`}</div>`}).join('')}</div>`).join('')}
+function wardrobeProfile(){if(!S.owned.length)return '<div class="card mu">Noch keine Kleidung. Im Shop kaufst du Hüte, Brillen und Halsschmuck für Appi.<br><button class="btn" data-a="tab" data-t="shop" style="margin-top:12px">Zum Shop</button></div>';
+ return '<div class="card">'+Object.keys(SLOTN).map(k=>{const own=ITEMS.filter(i=>i[0]===k&&S.owned.includes(k+':'+i[1]));return own.length?`<div class="mu sm" style="margin:6px 0"><b>${SLOTN[k]}</b></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px"><button class="chip ${S.outfit[k]?'':'on'}" data-a="wear" data-k="${k}" data-id="">Nichts</button>${own.map(i=>`<button class="chip ${S.outfit[k]===i[1]?'on':''}" data-a="wear" data-k="${k}" data-id="${i[1]}">${i[2]}</button>`).join('')}</div>`:''}).join('')+'</div>'}
+function profile(){return `<h1>Profil</h1><div class="card" style="text-align:center;margin-top:20px">${monkey(160,'pa')}<div style="margin:10px auto;max-width:300px"><input class="ti" id="nm" maxlength="16" value="${esc(S.name)}" aria-label="Dein Name" style="text-align:center;font-size:20px"></div><div class="mu sm">Lernt ${cur().name} · Name ändern und Enter drücken</div><div class="stat" style="margin:18px 0 0"><div>${S.xp}<small>Gesamt-XP</small></div><div>${S.streak}<small>Tage Streak</small></div><div>${S.lessons}<small>Lektionen</small></div></div></div>
+ <h2>Appi anziehen</h2>${wardrobeProfile()}<h2>Deine Sprachen</h2>${langsCard()}
+ <h2>Einstellungen</h2><div class="card"><div class="row"><div><b>Tagesziel</b><div class="mu sm">${goalXp()} XP pro Tag</div></div><button class="btn alt" data-a="goal">Ändern</button></div><div class="row"><div><b>Sprachausgabe</b><div class="mu sm">Wörter vorlesen lassen</div></div><button class="toggle ${S.sound?'on':''}" data-a="snd" aria-label="Sprachausgabe"><span></span></button></div><div class="row"><div><b>Soundeffekte</b><div class="mu sm">Töne bei Antworten und Belohnungen</div></div><button class="toggle ${S.sfx?'on':''}" data-a="sfx" aria-label="Soundeffekte"><span></span></button></div><div class="row"><div><b>Sicherungscode</b><div class="mu sm">Fortschritt auf ein anderes Gerät mitnehmen</div></div><button class="btn alt" data-a="backup">Öffnen</button></div><div class="row"><div><b>Fortschritt zurücksetzen</b><div class="mu sm">Löscht alle lokalen Daten</div></div><button class="btn alt" data-a="reset">Zurücksetzen</button></div></div>`}
 function quests(){const Q=[['xp','@@bolt@@',`Sammle ${goalXp()} XP`,S.dXp,goalXp(),10],['les','@@book@@','Schließe 1 Lektion ab',S.dLes,1,5],['ok','@@target@@','5 richtige Antworten',S.dOk,5,10]];
  return Q.map(q=>{const d=q[3]>=q[4],c=S.claimed.includes(q[0]);return `<div class="row"><span style="font-size:24px">${q[1]}</span><div><div class="sm">${q[2]}</div><div class="bar" style="height:8px;margin-top:6px"><i style="width:${Math.min(100,q[3]/q[4]*100)}%"></i></div></div>${c?'@@ok@@':d?`<button class="btn" style="padding:6px 10px" data-a="claim" data-id="${q[0]}" data-g="${q[5]}">@@gem@@${q[5]}</button>`:`<span class="mu sm">@@gem@@${q[5]}</span>`}</div>`}).join('')}
-function view(){const PG={home,practice,league,shop,profile}[S.tab]||home;
+function view(){const PG={home,practice,league,shop:()=>shop()+wardrobeShop(),profile,friends:friendsPage}[S.tab]||home;
  return `<div class="app"><aside class="side"><div class="logo">${monkey(44,'')}lingo</div><nav class="nav" aria-label="Hauptmenü">${TABS.map(t=>`<button class="${S.tab===t[0]?'on':''}" data-a="tab" data-t="${t[0]}"><span class="ic">${t[1]}</span>${t[2]}</button>`).join('')}</nav><button class="langbtn" data-a="courses"><span class="badge">${cur().code}</span><span style="flex:1;text-align:left"><b>${cur().name}</b><small class="mu" style="display:block">Level ${lvl(P().xp)}</small></span>@@chev@@</button></aside>
  <main class="main">${PG()}</main>
  <aside class="right"><div class="stat"><div>@@flame@@${S.streak}<small>Streak</small></div><div>@@gem@@${S.gems}<small>Juwelen</small></div><div>@@heart@@${S.hearts}<small>Herzen</small></div></div>
@@ -322,6 +378,22 @@ const A={
  tnext(){if(T.step<3){T.step++;T.r=T.step===2?['wow','jump',900]:null;tutUI()}else tend()},tskip(){tend()},
  tpick(d){const k=+d.k;T.sel=k;if(k===0){T.ok=true;T.r=['happy','jump',1000];sfx.ok()}else{T.r=['sad','shake',900];sfx.no()}tutUI();bubble($('#tut .appi'),k===0?pick(['Genau!','Richtig!','Affengut!']):'Fast! Versuch es nochmal.')},
  sfx(){S.sfx=!S.sfx;save();render()},
+ addf(){const f=parseCode($('#fin').value);if(!f)return toast('Dieser Code ist ungültig.');addFriend(f)},
+ addp(){if(PF)addFriend(PF);PF=null;closeM();try{history.replaceState(null,'',location.pathname+location.search)}catch{}},
+ fview(d){showFriend(d.id)},frem(d){S.friends=S.friends.filter(f=>f.id!==d.id);save();closeM();render();toast('Freund entfernt.')},
+ copyc(d){copy(d.w==='link'?myLink():myCode())},
+ buyc(d){const it=ITEMS.find(i=>i[0]===d.k&&i[1]===d.id);if(!it||S.owned.includes(d.k+':'+d.id))return;if(S.gems<it[3])return toast('Nicht genug Juwelen.');S.gems-=it[3];S.owned.push(d.k+':'+d.id);S.outfit[d.k]=d.id;save();render();sfx.pop();const a=$('.corner .appi');appi(a,'happy','spin',900);bubble(a,'Steht mir gut!')},
+ wear(d){if(d.id&&!S.owned.includes(d.k+':'+d.id))return;S.outfit[d.k]=(d.id&&S.outfit[d.k]!==d.id)?d.id:'';save();render();sfx.pop();const a=$('.pa')||$('.corner .appi')||$('.right .appi');appi(a,'happy','jump',800)},
+ backup(){const code='APPIBAK-'+b64(JSON.stringify(S));modal('Sicherungscode','<p class="mu sm">Kopiere diesen Code, um deinen Fortschritt in einem anderen Browser oder auf einem anderen Gerät weiterzunutzen.</p><textarea class="ta" readonly rows="4">'+code+'</textarea><button class="btn" data-a="copyb" style="margin-top:10px">Code kopieren</button><p class="mu sm" style="margin-top:18px">Sicherung einspielen (ersetzt deinen aktuellen Fortschritt):</p><textarea class="ta" id="bin" rows="3" placeholder="APPIBAK-…"></textarea><button class="btn alt" data-a="doimport" style="margin-top:10px">Einspielen</button>')},
+ copyb(){copy('APPIBAK-'+b64(JSON.stringify(S)))},
+ doimport(){const m=($('#bin').value||'').match(/APPIBAK-([A-Za-z0-9_-]+)/);let p;try{p=JSON.parse(unb64(m[1]))}catch{return toast('Dieser Sicherungscode ist ungültig.')}
+  if(!p||typeof p!=='object')return toast('Dieser Sicherungscode ist ungültig.');const ns=fresh(),df=fresh();
+  for(const k in df)if(k in p&&typeof p[k]===typeof df[k]&&Array.isArray(p[k])===Array.isArray(df[k]))ns[k]=p[k];
+  const lg={};for(const c of C){const v=ns.langs[c.id];if(v&&typeof v==='object'&&typeof v.xp==='number'&&v.done&&typeof v.done==='object')lg[c.id]={done:v.done,xp:v.xp,lessons:+v.lessons||0,intro:!!v.intro}}ns.langs=lg;
+  ns.friends=ns.friends.map(cleanFriend).filter(Boolean);ns.owned=ns.owned.filter(s=>ITEMS.some(i=>i[0]+':'+i[1]===s));
+  const o={};for(const [k,v] of Object.entries(ns.outfit||{}))if(ITEMS.some(i=>i[0]===k&&i[1]===v))o[k]=v;ns.outfit=o;
+  ns.name=String(ns.name).replace(/[<>]/g,'').slice(0,16)||'Sprachfreund';ns.uid=String(ns.uid).replace(/[^a-z0-9]/gi,'').slice(0,12)||newId();
+  S=ns;save();closeM();render();toast('Sicherung eingespielt.')},
  goal(){modal('Tagesziel',picker(GOALS.map(g=>[g[0],g[1],g[2]]),S.goal,'setg'))},setg(d){S.goal=d.id;save();closeM();render()},
  snd(){S.sound=!S.sound;save();render()},
  claim(d){if(S.claimed.includes(d.id))return;S.claimed.push(d.id);S.gems+=+d.g;save();render();sfx.ok();const a=$('.right .appi');appi(a,'happy','jump',900);bubble(a,'Juwelen!');toast(`+${d.g} Juwelen!`)},
@@ -329,14 +401,16 @@ const A={
   if(d.id==='heart'&&S.hearts>=5)return toast('Du hast schon volle Herzen.');if(d.id==='boost'&&S.boost)return toast('Boost ist schon aktiv.');
   S.gems-=c;if(d.id==='heart')S.hearts++;if(d.id==='freeze')S.freeze++;if(d.id==='boost')S.boost=true;if(S.hearts>=5)S.heartT=0;save();render();sfx.pop();const a=$('.corner .appi');appi(a,'happy','jump',900);bubble(a,'Gekauft! Danke!');toast('Gekauft!')},
  reset(){modal('Wirklich zurücksetzen?','<p class="mu">Alle XP, Juwelen und Fortschritte werden gelöscht.</p><button class="btn red" data-a="doreset" style="width:100%;margin-top:14px">Zurücksetzen</button>')},
- doreset(){S=fresh();save();closeM();render();setTimeout(tutorial,300)}
+ doreset(){S=fresh();S.uid=newId();save();closeM();render();setTimeout(tutorial,300)}
 };
 document.addEventListener('click',e=>{const ap=e.target.closest('.appi');if(ap&&!e.target.closest('[data-a]')){poke(ap);return}const b=e.target.closest('[data-a]');if(b&&A[b.dataset.a])A[b.dataset.a](b.dataset)});
-document.addEventListener('keydown',e=>{if(M&&e.key==='Escape')return closeM();if(!L||L.fin||L.fail||M)return;
+document.addEventListener('change',e=>{if(e.target.id==='nm'){S.name=e.target.value.replace(/[<>]/g,'').trim().slice(0,16)||'Sprachfreund';e.target.value=S.name;save();toast('Name gespeichert.')}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='nm'){e.target.blur();return}if(M&&e.key==='Escape')return closeM();if(!L||L.fin||L.fail||M)return;
  if(e.key==='Enter'){e.preventDefault();L.fb?next():check()}
  else if(!L.fb&&L.q.mode==='choice'&&/^[1-4]$/.test(e.key)){L.sel=L.q.opts[+e.key-1];lessonUI()}});
 render();$('.main').classList.add('anim');
 if(!P().intro)setTimeout(tutorial,350);else setTimeout(()=>{const a=$('.hero .appi');appi(a,'happy','wave',1600);bubble(a,'Hallo! Weiter mit '+cur().name+'?')},600);
+const hf=parseCode(location.hash);if(hf)pendF=hf;if(P().intro)setTimeout(offerPending,1500);
 setInterval(()=>{if(L)return;const h=S.hearts;tick();if(S.hearts!==h)render()},60000);
 setInterval(()=>{if(L||T||M)return;const a=$('.hero .appi')||$('.corner .appi')||$('.right .appi');if(a)appi(a,'happy',pick(['wave','dance','jump']),1500)},13000);
 })();
